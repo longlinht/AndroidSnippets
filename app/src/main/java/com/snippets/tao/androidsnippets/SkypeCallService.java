@@ -18,8 +18,8 @@ public class SkypeCallService extends Service{
 
     private static final String TAG = SkypeCallService.class.getSimpleName();
     public static final String SKYPE_CALL_ACTION = "com.snippets.tao.androidsnippets.SKYPE_CALL_ACTION";
-    //private final static String CALLING_NUMBER = "15110062539";
-    private final static String CALLING_NUMBER = "13439904939";
+    private final static String CALLING_NUMBER = "15110062539";
+    //private final static String CALLING_NUMBER = "13439904939";
     private final static int DAY_OF_HOUR = 02;
     private final static int HOUR_OF_MIN = 00;
     private final static int MIN_OF_SECON = 00;
@@ -85,7 +85,7 @@ public class SkypeCallService extends Service{
                 PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmMgr.cancel(pi);
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60000,
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, getTriggerTime(),
                 AlarmManager.INTERVAL_DAY, pi);
     }
 
