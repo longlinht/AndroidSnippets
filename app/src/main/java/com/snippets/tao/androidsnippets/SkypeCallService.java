@@ -19,7 +19,6 @@ public class SkypeCallService extends Service{
     private static final String TAG = SkypeCallService.class.getSimpleName();
     public static final String SKYPE_CALL_ACTION = "com.snippets.tao.androidsnippets.SKYPE_CALL_ACTION";
     private final static String CALLING_NUMBER = "15110062539";
-    //private final static String CALLING_NUMBER = "13439904939";
     private final static int DAY_OF_HOUR = 02;
     private final static int HOUR_OF_MIN = 00;
     private final static int MIN_OF_SECON = 00;
