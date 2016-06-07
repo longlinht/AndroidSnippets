@@ -60,6 +60,10 @@ public class SkypeCallService extends Service{
         if (intent.getAction() == null) return START_STICKY;
 
         if (intent.getAction().equals(SKYPE_CALL_ACTION)) {
+
+            if (beyondSleepTime(System.currentTimeMillis()))
+                return START_STICKY;
+
             Intent sky = new Intent("android.intent.action.CALL_PRIVILEGED");
             sky.setClassName("com.skype.polaris",
                     "com.skype.raider.Main");
@@ -86,10 +90,10 @@ public class SkypeCallService extends Service{
         AlarmManager alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmMgr.cancel(pi);
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, getTriggerTime(),
-                AlarmManager.INTERVAL_DAY, pi);
+                AlarmManager.INTERVAL_HOUR * 2, pi);
     }
 
-    private static long getTriggerTime() {
+    private long getTriggerTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, DAY_OF_HOUR);
         calendar.set(Calendar.MINUTE, HOUR_OF_MIN);
@@ -98,5 +102,16 @@ public class SkypeCallService extends Service{
         Log.e(TAG, "trigger time: " + calendar.getTime().toString());
 
         return calendar.getTimeInMillis();
+    }
+
+    private boolean beyondSleepTime(long currentTime) {
+
+        Calendar currentCal = Calendar.getInstance();
+        currentCal.setTimeInMillis(currentTime);
+        int hour = currentCal.getTime().getHours();
+        if (hour > 6)
+            return true;
+
+        return false;
     }
 }
