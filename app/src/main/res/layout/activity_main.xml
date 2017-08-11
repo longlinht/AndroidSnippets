@@ -13,12 +13,16 @@
     <TextView
           android:id="@+id/pageUpView"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
+          android:layout_height="wrap_content"
+          android:text="分享有奖，快来分享把！"
+    />
 
     <TextView
           android:id="@+id/pageDownView"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
+          android:layout_height="wrap_content"
+          android:text="机会多多"
+    />
 
 
 </RelativeLayout>

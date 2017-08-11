@@ -5,35 +5,142 @@ import android.animation.ObjectAnimator;
 import android.animation.Animator;
 import android.view.animation.LinearInterpolator;
 import android.animation.PropertyValuesHolder;
-import android.widget.TextView;
 
 public class PageUpDownAnimation {
 
-    private static ObjectAnimator rotateXAnim;
-    private static ObjectAnimator rotateXReverseAnim;
+    private static int pageUpDownDurition = 500;
+    private static int pageUpBeforeDownEnd = 400;
+    private static int belowViewStayInterval = 800;
+    private static int pageUpPivotY = 100;
+    private static int pageDownPivotY = 70;
 
-    public static void startReverseRotateAnim(final TextView pageUpView, final TextView pageDownView) {
-       rotateXAnim = ObjectAnimator.ofPropertyValuesHolder(pageUpView,
-       PropertyValuesHolder.ofFloat(View.ROTATION_X, 0, 90));
-       rotateXAnim.setDuration(500);
-       rotateXAnim.setInterpolator(new LinearInterpolator());
+    private static ObjectAnimator aboveViewPageDownAnim;
+    private static ObjectAnimator belowViewPageUpAnim;
+    private static ObjectAnimator aboveViewPageUpAnim;
+    private static ObjectAnimator belowViewPageDownAnim;
 
-       rotateXAnim.addListener(new Animator.AnimatorListener() {
-           @Override
-           public void onAnimationStart(Animator animator) {
-               pageUpView.setPivotY(70);
-               pageUpView.setText("分享有奖，快来分享把！");
-               pageDownView.setVisibility(View.GONE);
-               pageDownView.postDelayed(new Runnable() {
+    public static void startPageUpDownAnimation(final View aboveView, final View belowView) {
+
+        aboveViewPageDownAnim = ObjectAnimator.ofPropertyValuesHolder(aboveView,
+                PropertyValuesHolder.ofFloat(View.ROTATION_X, 0, 90));
+
+        aboveViewPageDownAnim.setDuration(pageUpDownDurition);
+        aboveViewPageDownAnim.setInterpolator(new LinearInterpolator());
+        aboveViewPageDownAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                aboveView.setPivotY(pageDownPivotY);
+                belowView.setVisibility(View.GONE);
+                belowView.postDelayed(new Runnable() {
                    @Override
                    public void run() {
-                       rotateXReverseAnim.start();
+                       belowViewPageUpAnim.start();
                    }
-               }, 400);
+               }, pageUpBeforeDownEnd);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
+        belowViewPageUpAnim = ObjectAnimator.ofPropertyValuesHolder(belowView,
+        PropertyValuesHolder.ofFloat(View.ROTATION_X, -90, 0));
+        belowViewPageUpAnim.setDuration(pageUpDownDurition);
+        belowViewPageUpAnim.setInterpolator(new LinearInterpolator());
+        belowViewPageUpAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                belowView.setVisibility(View.VISIBLE);
+                belowView.setPivotY(pageUpPivotY);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                belowView.postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                       belowViewPageDownAnim.start();
+                   }
+                }, belowViewStayInterval);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
+        belowViewPageDownAnim = ObjectAnimator.ofPropertyValuesHolder(belowView,
+                PropertyValuesHolder.ofFloat(View.ROTATION_X, 0, 90));
+
+        belowViewPageDownAnim.setDuration(pageUpDownDurition);
+        belowViewPageDownAnim.setInterpolator(new LinearInterpolator());
+        belowViewPageDownAnim.addListener(new Animator.AnimatorListener() {
+
+            @Override
+            public void onAnimationStart(Animator animator) {
+                belowView.setPivotY(pageDownPivotY);
+                aboveView.setVisibility(View.GONE);
+                aboveView.postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                       aboveViewPageUpAnim.start();
+                   }
+               }, pageUpBeforeDownEnd);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
+        aboveViewPageUpAnim = ObjectAnimator.ofPropertyValuesHolder(aboveView,
+                PropertyValuesHolder.ofFloat(View.ROTATION_X, -90, 0));
+        aboveViewPageUpAnim.setDuration(pageUpDownDurition);
+        aboveViewPageUpAnim.setInterpolator(new LinearInterpolator());
+        aboveViewPageUpAnim.addListener(new Animator.AnimatorListener() {
+           @Override
+           public void onAnimationStart(Animator animator) {
+               aboveView.setVisibility(View.VISIBLE);
+               aboveView.setPivotY(pageUpPivotY);
            }
 
            @Override
            public void onAnimationEnd(Animator animator) {
+               aboveView.postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                       aboveViewPageDownAnim.start();
+                   }
+               }, belowViewStayInterval);
            }
 
            @Override
@@ -47,117 +154,7 @@ public class PageUpDownAnimation {
            }
        });
 
-       rotateXReverseAnim = ObjectAnimator.ofPropertyValuesHolder(pageDownView,
-       PropertyValuesHolder.ofFloat(View.ROTATION_X, -90, 0));
-       rotateXReverseAnim.setDuration(500);
-       rotateXReverseAnim.setInterpolator(new LinearInterpolator());
-       rotateXReverseAnim.addListener(new Animator.AnimatorListener() {
-           @Override
-           public void onAnimationStart(Animator animator) {
-               pageDownView.setVisibility(View.VISIBLE);
-               pageDownView.setPivotY(100);
-               pageDownView.setText("机会多多");
-           }
-
-           @Override
-           public void onAnimationEnd(Animator animator) {
-               pageDownView.postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
-                       startSubtitleRotateAnim(pageDownView, pageUpView);
-                   }
-               }, 800);
-           }
-
-           @Override
-           public void onAnimationCancel(Animator animator) {
-
-           }
-
-           @Override
-           public void onAnimationRepeat(Animator animator) {
-
-           }
-       });
-       rotateXAnim.start();
-   }
-
-
-    public static void startSubtitleRotateAnim(final TextView pageUpView, final TextView pageDownView) {
-       rotateXAnim = ObjectAnimator.ofPropertyValuesHolder(pageDownView,
-       PropertyValuesHolder.ofFloat(View.ROTATION_X, 0, 90));
-       rotateXAnim.setDuration(500);
-       rotateXAnim.setInterpolator(new LinearInterpolator());
-
-       rotateXAnim.addListener(new Animator.AnimatorListener() {
-           @Override
-           public void onAnimationStart(Animator animator) {
-               pageDownView.setPivotY(70);
-               pageDownView.setText("机会多多");
-               pageUpView.setVisibility(View.GONE);
-               pageUpView.postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
-                       rotateXReverseAnim.start();
-                   }
-               }, 400);
-           }
-
-           @Override
-           public void onAnimationEnd(Animator animator) {
-           }
-
-           @Override
-           public void onAnimationCancel(Animator animator) {
-
-           }
-
-           @Override
-           public void onAnimationRepeat(Animator animator) {
-
-           }
-       });
-
-       rotateXReverseAnim = ObjectAnimator.ofPropertyValuesHolder(pageUpView,
-       PropertyValuesHolder.ofFloat(View.ROTATION_X, -90, 0));
-       rotateXReverseAnim.setDuration(500);
-       rotateXReverseAnim.setInterpolator(new LinearInterpolator());
-       rotateXReverseAnim.addListener(new Animator.AnimatorListener() {
-           @Override
-           public void onAnimationStart(Animator animator) {
-               pageUpView.setVisibility(View.VISIBLE);
-               pageUpView.setPivotY(100);
-               pageUpView.setText("分享有奖，快来分享把！");
-           }
-
-           @Override
-           public void onAnimationEnd(Animator animator) {
-               pageDownView.postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
-                       startReverseRotateAnim(pageDownView, pageUpView);
-                   }
-               }, 800);
-           }
-
-           @Override
-           public void onAnimationCancel(Animator animator) {
-
-           }
-
-           @Override
-           public void onAnimationRepeat(Animator animator) {
-
-           }
-       });
-       rotateXAnim.start();
-   }
+       aboveViewPageDownAnim.start();
+    }
 }
-
-
-
-
-
-
-
 

@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         TextView pageDownView = (TextView)findViewById(R.id.pageDownView);
         TextView pageUpView = (TextView)findViewById(R.id.pageUpView);
 
-        PageUpDownAnimation.startSubtitleRotateAnim(pageDownView, pageUpView);
+        PageUpDownAnimation.startPageUpDownAnimation(pageDownView, pageUpView);
 
         /*
         Intent intent = new Intent();
