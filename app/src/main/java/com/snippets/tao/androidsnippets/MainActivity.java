@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import com.snippets.tao.androidsnippets.ui.PageUpDownAnimation;
+import com.snippets.tao.androidsnippets.utils.ScreenshotManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ScreenshotManager.OnScreenshotTakenListener{
 
+    private ScreenshotManager mScreenshotManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         TextView pageUpView = (TextView)findViewById(R.id.pageUpView);
 
         PageUpDownAnimation.startPageUpDownAnimation(pageDownView, pageUpView);
+        mScreenshotManager = new ScreenshotManager(this, this);
 
         /*
         Intent intent = new Intent();
@@ -25,5 +28,24 @@ public class MainActivity extends AppCompatActivity {
         startService(intent);
         finish();
         */
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mScreenshotManager.startScreenshotObserver();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mScreenshotManager.stopScreenshotObserver();
+    }
+
+
+    @Override
+    public void onScreenshotTaken(String path) {
+
     }
 }
