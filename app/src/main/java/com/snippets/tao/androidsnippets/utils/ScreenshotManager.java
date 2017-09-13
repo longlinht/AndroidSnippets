@@ -10,8 +10,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.widget.Toast;
-import com.snippets.tao.androidsnippets.logger.Log;
 
 import java.io.File;
 import java.util.Timer;
@@ -71,7 +69,6 @@ public class ScreenshotManager {
     }
 
     public void startScreenshotObserver() {
-        Log.e("htdebug", "start observe");
         mContext.getContentResolver().registerContentObserver(
                 MediaStore.Images.Media.INTERNAL_CONTENT_URI,
                 false,
