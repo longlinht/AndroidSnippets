@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         TextView pageDownView = (TextView)findViewById(R.id.pageDownView);
         TextView pageUpView = (TextView)findViewById(R.id.pageUpView);
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         mScreenshotManager = new ScreenshotManager(this, this);
 
         PermissionUtils.checkReadStoragePermission(this);
+        */
 
 
         /*
@@ -40,14 +42,12 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
     @Override
     public void onResume() {
         super.onResume();
-        mScreenshotManager.startScreenshotObserver();
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mScreenshotManager.stopScreenshotObserver();
     }
 
 
