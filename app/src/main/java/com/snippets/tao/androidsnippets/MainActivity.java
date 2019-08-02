@@ -1,11 +1,17 @@
 package com.snippets.tao.androidsnippets;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.snippets.tao.androidsnippets.demo.AgorithmImpl;
+import com.snippets.tao.androidsnippets.demo.SimpleJobIntentService;
+import com.snippets.tao.androidsnippets.demo.ThreadLocalDemo;
 import com.snippets.tao.androidsnippets.ui.PageUpDownAnimation;
 import com.snippets.tao.androidsnippets.utils.PermissionConstant;
 import com.snippets.tao.androidsnippets.utils.PermissionUtils;
@@ -19,6 +25,24 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Button button = findViewById(R.id.test_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                SimpleJobIntentService.enqueueWork(MainActivity.this, intent);
+            }
+        });
+
+        //ThreadLocalDemo.test();
+        AgorithmImpl.test();
+
+        try {
+            ThreadLocalDemo.startDemo();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         /*
         TextView pageDownView = (TextView)findViewById(R.id.pageDownView);
         TextView pageUpView = (TextView)findViewById(R.id.pageUpView);

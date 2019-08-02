@@ -4,26 +4,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
-    <com.snippets.tao.androidsnippets.demo.CustomViewGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FF9900" >
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="btn" />
-
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="btn" />
-
-        <Button
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:text="btn" />
-
-    </com.snippets.tao.androidsnippets.demo.CustomViewGroup>
+    <Button
+                android:id="@+id/test_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="btn"
+        />
 
 </RelativeLayout>
