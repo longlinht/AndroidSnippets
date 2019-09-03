@@ -4,6 +4,9 @@ package com.snippets.tao.androidsnippets.utils;
  * Created by Tao He on 16-7-7.
  * Email: hetaoof@gmail.com
  */
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.Closeable;
@@ -140,12 +143,15 @@ public final class DiskLruCache implements Closeable {
      */
 
     private final File directory;
+    @NonNull
     private final File journalFile;
+    @NonNull
     private final File journalFileTmp;
     private final int appVersion;
     private final long maxSize;
     private final int valueCount;
     private long size = 0;
+    @Nullable
     private Writer journalWriter;
     private final LinkedHashMap<String, Entry> lruEntries
             = new LinkedHashMap<String, Entry>(0, 0.75f, true);
@@ -159,6 +165,7 @@ public final class DiskLruCache implements Closeable {
     private long nextSequenceNumber = 0;
 
     /* From java.util.Arrays */
+    @NonNull
     @SuppressWarnings("unchecked")
     private static <T> T[] copyOfRange(T[] original, int start, int end) {
         final int originalLength = original.length; // For exception priority compatibility.
@@ -224,7 +231,7 @@ public final class DiskLruCache implements Closeable {
     /**
      * Closes 'closeable', ignoring any checked exceptions. Does nothing if 'closeable' is null.
      */
-    public static void closeQuietly(Closeable closeable) {
+    public static void closeQuietly(@Nullable Closeable closeable) {
         if (closeable != null) {
             try {
                 closeable.close();
@@ -292,7 +299,8 @@ public final class DiskLruCache implements Closeable {
      * @param maxSize the maximum number of bytes this cache should use to store
      * @throws java.io.IOException if reading or writing the cache directory fails
      */
-    public static DiskLruCache open(File directory, int appVersion, int valueCount, long maxSize)
+    @NonNull
+    public static DiskLruCache open(@NonNull File directory, int appVersion, int valueCount, long maxSize)
             throws IOException {
         if (maxSize <= 0) {
             throw new IllegalArgumentException("maxSize <= 0");
@@ -458,7 +466,7 @@ public final class DiskLruCache implements Closeable {
      * exist is not currently readable. If a value is returned, it is moved to
      * the head of the LRU queue.
      */
-    public synchronized Snapshot get(String key) throws IOException {
+    public synchronized Snapshot get(@NonNull String key) throws IOException {
         checkNotClosed();
         validateKey(key);
         Entry entry = lruEntries.get(key);
@@ -498,11 +506,12 @@ public final class DiskLruCache implements Closeable {
      * Returns an editor for the entry named {@code key}, or null if another
      * edit is in progress.
      */
-    public Editor edit(String key) throws IOException {
+    @Nullable
+    public Editor edit(@NonNull String key) throws IOException {
         return edit(key, ANY_SEQUENCE_NUMBER);
     }
 
-    private synchronized Editor edit(String key, long expectedSequenceNumber) throws IOException {
+    private synchronized Editor edit(@NonNull String key, long expectedSequenceNumber) throws IOException {
         checkNotClosed();
         validateKey(key);
         Entry entry = lruEntries.get(key);
@@ -616,7 +625,7 @@ public final class DiskLruCache implements Closeable {
      *
      * @return true if an entry was removed.
      */
-    public synchronized boolean remove(String key) throws IOException {
+    public synchronized boolean remove(@NonNull String key) throws IOException {
         checkNotClosed();
         validateKey(key);
         Entry entry = lruEntries.get(key);
@@ -731,6 +740,7 @@ public final class DiskLruCache implements Closeable {
          * entry has changed since this snapshot was created or if another edit
          * is in progress.
          */
+        @Nullable
         public Editor edit() throws IOException {
             return DiskLruCache.this.edit(key, sequenceNumber);
         }
@@ -885,12 +895,14 @@ public final class DiskLruCache implements Closeable {
         private final String key;
 
         /** Lengths of this entry's files. */
+        @NonNull
         private final long[] lengths;
 
         /** True if this entry has ever been published */
         private boolean readable;
 
         /** The ongoing edit or null if this entry is not being edited. */
+        @Nullable
         private Editor currentEditor;
 
         /** The sequence number of the most recently committed edit to this entry. */
@@ -926,6 +938,7 @@ public final class DiskLruCache implements Closeable {
             }
         }
 
+        @NonNull
         private IOException invalidLengths(String[] strings) throws IOException {
             throw new IOException("unexpected journal line: " + Arrays.toString(strings));
         }
