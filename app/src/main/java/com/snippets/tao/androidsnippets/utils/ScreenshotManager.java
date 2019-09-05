@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -25,6 +27,7 @@ public class ScreenshotManager {
     private OnScreenshotTakenListener mListener;
     private String mLastTakenPath;
     private Context mContext;
+    @Nullable
     private Timer mCheckImageTimer;
     private int mCount = 0;
 
@@ -87,7 +90,7 @@ public class ScreenshotManager {
         releaseTimer();
     }
 
-    private void handleMediaContentChange(Uri contentUri) {
+    private void handleMediaContentChange(@NonNull Uri contentUri) {
         Cursor cursor = null;
         try {
             // 数据改变时查询数据库中最后加入的一条数据
@@ -127,7 +130,7 @@ public class ScreenshotManager {
         }
     }
 
-    private void handleMediaRowData(String data, long dateTaken) {
+    private void handleMediaRowData(@NonNull String data, long dateTaken) {
         if (TextUtils.isEmpty(data))
             return;
 

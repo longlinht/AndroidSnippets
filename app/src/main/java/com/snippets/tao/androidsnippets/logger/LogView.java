@@ -17,6 +17,8 @@ package com.snippets.tao.androidsnippets.logger;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.*;
 import android.widget.TextView;
 
@@ -45,7 +47,7 @@ public class LogView extends TextView implements LogNode {
      *           to extract and print useful information.
      */
     @Override
-    public void println(int priority, String tag, String msg, Throwable tr) {
+    public void println(int priority, String tag, String msg, @Nullable Throwable tr) {
 
         
         String priorityStr = null;
@@ -122,7 +124,8 @@ public class LogView extends TextView implements LogNode {
      *                  for instance.
      * @return The fully concatenated String as a StringBuilder
      */
-    private StringBuilder appendIfNotNull(StringBuilder source, String addStr, String delimiter) {
+    @NonNull
+    private StringBuilder appendIfNotNull(@NonNull StringBuilder source, @Nullable String addStr, String delimiter) {
         if (addStr != null) {
             if (addStr.length() == 0) {
                 delimiter = "";

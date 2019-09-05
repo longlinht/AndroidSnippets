@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+// Add ErrorProne plugin
+apply plugin: 'net.ltgt.errorprone'
 
 android {
     compileSdkVersion 28
@@ -6,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.snippets.tao.androidsnippets"
-        minSdkVersion 14
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -17,10 +19,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:28.0.0'
+
+    annotationProcessor "com.uber.nullaway:nullaway:0.3.0"
+    errorprone "com.google.errorprone:error_prone_core:2.1.3"
+}
+
+
+tasks.withType(JavaCompile) {
+    // remove the if condition if you want to run NullAway on test code
+    if (!name.toLowerCase().contains("test")) {
+        // remove "-Xep:NullAway:ERROR" to have NullAway only emit warnings
+        options.compilerArgs += ["-Xep:NullAway:OFF", "-XepOpt:NullAway:AnnotatedPackages=com.snippets"]
+    }
 }

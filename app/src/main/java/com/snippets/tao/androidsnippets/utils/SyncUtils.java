@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Tao He on 16-7-13.
@@ -26,7 +27,7 @@ public class SyncUtils {
      * @param context Context
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
-    public static void CreateSyncAccount(Context context, String accountType, String contentAuthority,
+    public static void CreateSyncAccount(@NonNull Context context, String accountType, String contentAuthority,
                                          long syncFrequency) {
 
         sAccountType = accountType;

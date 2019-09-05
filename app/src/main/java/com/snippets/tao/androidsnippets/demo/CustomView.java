@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import com.snippets.tao.androidsnippets.R;
@@ -22,7 +23,7 @@ public class CustomView extends View {
         super(context);
     }
 
-    public CustomView(Context context, AttributeSet attributeSet) {
+    public CustomView(@NonNull Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
 
         TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.CustomView);
@@ -47,7 +48,7 @@ public class CustomView extends View {
 
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         int r = getMeasuredWidth() / 2;
         int centerX = getLeft() + r;

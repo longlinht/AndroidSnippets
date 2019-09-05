@@ -1,5 +1,6 @@
 package com.snippets.tao.androidsnippets.ui;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.animation.ObjectAnimator;
 import android.animation.Animator;
@@ -19,7 +20,7 @@ public class PageUpDownAnimation {
     private static ObjectAnimator aboveViewPageUpAnim;
     private static ObjectAnimator belowViewPageDownAnim;
 
-    public static void startPageUpDownAnimation(final View aboveView, final View belowView) {
+    public static void startPageUpDownAnimation(@NonNull final View aboveView, @NonNull final View belowView) {
 
         aboveViewPageDownAnim = ObjectAnimator.ofPropertyValuesHolder(aboveView,
                 PropertyValuesHolder.ofFloat(View.ROTATION_X, 0, 90));

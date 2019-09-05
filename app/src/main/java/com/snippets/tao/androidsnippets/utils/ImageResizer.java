@@ -10,6 +10,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.FileDescriptor;
 
@@ -30,7 +32,7 @@ public class ImageResizer extends ImageWorker {
      * @param imageWidth
      * @param imageHeight
      */
-    public ImageResizer(Context context, int imageWidth, int imageHeight) {
+    public ImageResizer(@NonNull Context context, int imageWidth, int imageHeight) {
         super(context);
         setImageSize(imageWidth, imageHeight);
     }
@@ -41,7 +43,7 @@ public class ImageResizer extends ImageWorker {
      * @param context
      * @param imageSize
      */
-    public ImageResizer(Context context, int imageSize) {
+    public ImageResizer(@NonNull Context context, int imageSize) {
         super(context);
         setImageSize(imageSize);
     }
@@ -181,7 +183,7 @@ public class ImageResizer extends ImageWorker {
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static void addInBitmapOptions(BitmapFactory.Options options, ImageCache cache) {
+    private static void addInBitmapOptions(BitmapFactory.Options options, @Nullable ImageCache cache) {
         //BEGIN_INCLUDE(add_bitmap_options)
         // inBitmap only works with mutable bitmaps so force the decoder to
         // return mutable bitmaps.

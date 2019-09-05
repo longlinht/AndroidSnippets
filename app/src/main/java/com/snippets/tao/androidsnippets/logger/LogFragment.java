@@ -33,6 +33,7 @@ package com.snippets.tao.androidsnippets.logger;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,11 +49,14 @@ import android.widget.ScrollView;
  */
 public class LogFragment extends Fragment {
 
+    @Nullable
     private LogView mLogView;
+    @Nullable
     private ScrollView mScrollView;
 
     public LogFragment() {}
 
+    @Nullable
     public View inflateViews() {
         mScrollView = new ScrollView(getActivity());
         ViewGroup.LayoutParams scrollParams = new ViewGroup.LayoutParams(
@@ -103,6 +107,7 @@ public class LogFragment extends Fragment {
         return result;
     }
 
+    @Nullable
     public LogView getLogView() {
         return mLogView;
     }

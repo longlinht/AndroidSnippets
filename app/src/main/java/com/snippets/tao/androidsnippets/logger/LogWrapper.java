@@ -16,6 +16,7 @@
 
 package com.snippets.tao.androidsnippets.logger;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**
@@ -50,7 +51,7 @@ public class LogWrapper implements LogNode {
      *           to extract and print useful information.
      */
     @Override
-    public void println(int priority, String tag, String msg, Throwable tr) {
+    public void println(int priority, String tag, String msg, @Nullable Throwable tr) {
         // There actually are log methods that don't take a msg parameter.  For now,
         // if that's the case, just convert null to the empty string and move on.
         String useMsg = msg;

@@ -3,6 +3,7 @@ package com.snippets.tao.androidsnippets.demo;
 import android.app.Activity;
 import android.graphics.*;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -39,7 +40,7 @@ public class SurfaceViewDemoActivity extends Activity {
 			}
 
 			@Override
-			public void surfaceCreated(SurfaceHolder holder)
+			public void surfaceCreated(@NonNull SurfaceHolder holder)
 			{
 				// 锁定整个SurfaceView
 				Canvas canvas = holder.lockCanvas();
@@ -64,7 +65,7 @@ public class SurfaceViewDemoActivity extends Activity {
 		surface.setOnTouchListener(new View.OnTouchListener()
 		{
 			@Override
-			public boolean onTouch(View source, MotionEvent event)
+			public boolean onTouch(View source, @NonNull MotionEvent event)
 			{
 				// 只处理按下事件
 				if (event.getAction() == MotionEvent.ACTION_DOWN)

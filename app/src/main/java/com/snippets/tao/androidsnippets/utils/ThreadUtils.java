@@ -11,6 +11,8 @@ import java.util.concurrent.FutureTask;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Helper methods to deal with threading related tasks.
@@ -19,12 +21,15 @@ public class ThreadUtils {
 
     private static final Object sLock = new Object();
 
+    @Nullable
     private static Handler sUiThreadHandler = null;
 
+    @NonNull
     private static ArrayDeque<Runnable> sWaitingRunnables = new ArrayDeque<Runnable>();
 
     private static boolean serialUIExcutorPermitted = true;
 
+    @Nullable
     public static Handler getUiThreadHandler() {
         synchronized (sLock) {
             if (sUiThreadHandler == null) {
@@ -40,7 +45,7 @@ public class ThreadUtils {
      *
      * @param r The Runnable to run.
      */
-    public static void runOnUiThreadBlocking(final Runnable r) {
+    public static void runOnUiThreadBlocking(@NonNull final Runnable r) {
         if (runningOnUiThread()) {
             r.run();
         } else {
@@ -94,7 +99,8 @@ public class ThreadUtils {
      * @param task The FutureTask to run
      * @return The queried task (to aid inline construction)
      */
-    public static <T> FutureTask<T> runOnUiThread(FutureTask<T> task) {
+    @NonNull
+    public static <T> FutureTask<T> runOnUiThread(@NonNull FutureTask<T> task) {
         if (runningOnUiThread()) {
             task.run();
         } else {
@@ -109,7 +115,7 @@ public class ThreadUtils {
      *
      * @param r The Runnable to run
      */
-    public static void runOnUiThread(Runnable r) {
+    public static void runOnUiThread(@NonNull Runnable r) {
         if (runningOnUiThread()) {
             r.run();
         } else {
@@ -135,7 +141,7 @@ public class ThreadUtils {
      *
      * @param task The Runnable to run
      */
-    public static void postOnUiThread(Runnable r) {
+    public static void postOnUiThread(@NonNull Runnable r) {
         if (Looper.getMainLooper() == Looper.myLooper()) {
             r.run();
         } else {

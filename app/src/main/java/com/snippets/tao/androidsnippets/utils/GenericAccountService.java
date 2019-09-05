@@ -9,6 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.snippets.tao.androidsnippets.logger.Log;
 
 /**
@@ -65,12 +68,14 @@ public class GenericAccountService extends Service{
             super(context);
         }
 
+        @NonNull
         @Override
         public Bundle editProperties(AccountAuthenticatorResponse accountAuthenticatorResponse,
                                      String s) {
             throw new UnsupportedOperationException();
         }
 
+        @Nullable
         @Override
         public Bundle addAccount(AccountAuthenticatorResponse accountAuthenticatorResponse,
                                  String s, String s2, String[] strings, Bundle bundle)
@@ -78,6 +83,7 @@ public class GenericAccountService extends Service{
             return null;
         }
 
+        @Nullable
         @Override
         public Bundle confirmCredentials(AccountAuthenticatorResponse accountAuthenticatorResponse,
                                          Account account, Bundle bundle)
@@ -85,6 +91,7 @@ public class GenericAccountService extends Service{
             return null;
         }
 
+        @NonNull
         @Override
         public Bundle getAuthToken(AccountAuthenticatorResponse accountAuthenticatorResponse,
                                    Account account, String s, Bundle bundle)
@@ -92,11 +99,13 @@ public class GenericAccountService extends Service{
             throw new UnsupportedOperationException();
         }
 
+        @NonNull
         @Override
         public String getAuthTokenLabel(String s) {
             throw new UnsupportedOperationException();
         }
 
+        @NonNull
         @Override
         public Bundle updateCredentials(AccountAuthenticatorResponse accountAuthenticatorResponse,
                                         Account account, String s, Bundle bundle)
@@ -104,6 +113,7 @@ public class GenericAccountService extends Service{
             throw new UnsupportedOperationException();
         }
 
+        @NonNull
         @Override
         public Bundle hasFeatures(AccountAuthenticatorResponse accountAuthenticatorResponse,
                                   Account account, String[] strings)

@@ -26,6 +26,8 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -46,6 +48,7 @@ public class SystemUtils {
     private static final String APP_DETAILS_PACKAGE_NAME = "com.android.settings";
     private static final String APP_DETAILS_CLASS_NAME = "com.android.settings.InstalledAppDetails";
 
+    @NonNull
     private static String TAG = SystemUtils.class.getSimpleName() ;
     private static boolean mInitialized = false;
     private static int SCREEN_WIDTH = 480;
@@ -54,7 +57,7 @@ public class SystemUtils {
 	private static float FONT_SCALE = 1.0F;
     private static int sNavigationBarHeight = Integer.MIN_VALUE;
 
-    private static void ensureInitialized(Context context) {
+    private static void ensureInitialized(@NonNull Context context) {
         try{
             if (mInitialized)
                 return;
@@ -77,12 +80,12 @@ public class SystemUtils {
         }
     }
 
-    public static int getScreenWidth(Context context) {
+    public static int getScreenWidth(@NonNull Context context) {
         ensureInitialized(context);
         return SCREEN_WIDTH;
     }
 
-    public static int getScreenHeight(Context context) {
+    public static int getScreenHeight(@NonNull Context context) {
         ensureInitialized(context);
         return SCREEN_HEIGHT;
     }
@@ -96,6 +99,7 @@ public class SystemUtils {
         cmb.setText(text);
     }
 
+    @NonNull
     public static ArrayList<ResolveInfo> hasDefaultBrowser(Context context) {
         ArrayList<ResolveInfo> browserList = new ArrayList<ResolveInfo>();
         PackageManager packageManager = context.getPackageManager();
@@ -139,6 +143,7 @@ public class SystemUtils {
 
 
 
+    @NonNull
     public static Intent getPackageDetailsIntent(String packageName) {
         Intent intent = new Intent();
         int apiLevel = 0;
@@ -187,7 +192,7 @@ public class SystemUtils {
         return false;
     }
 
-    public static boolean isLandscape(Context activity) {
+    public static boolean isLandscape(@Nullable Context activity) {
         if (activity == null) {
             return false;
         }
@@ -219,7 +224,7 @@ public class SystemUtils {
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    public static void zoomView(int w, int h, View view) {
+    public static void zoomView(int w, int h, @Nullable View view) {
         if (view == null) {
             return;
         }
@@ -238,7 +243,7 @@ public class SystemUtils {
         params.height = height;
     }
 
-    public static void zoomViewFull(View view) {
+    public static void zoomViewFull(@Nullable View view) {
         if (view == null) {
             return;
         }
@@ -259,7 +264,7 @@ public class SystemUtils {
         return LayoutInflater.from(context).inflate(resource, root, attachToRoot);
     }
 
-    public static int getStatusHeight(Context context){
+    public static int getStatusHeight(@NonNull Context context){
         int statusHeight = 0;
         Rect localRect = new Rect();
         ((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(localRect);
@@ -332,7 +337,8 @@ public class SystemUtils {
         return navigationBarHeight;
     }
 
-    public static File getFilesDir(Context ctx) {
+    @Nullable
+    public static File getFilesDir(@Nullable Context ctx) {
 		if (null == ctx) {
 			return null;
 		}

@@ -8,6 +8,8 @@ package com.snippets.tao.androidsnippets.utils;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -76,9 +78,13 @@ import java.util.Map;
 public class SelectionBuilder {
     private static final String TAG = SelectionBuilder.class.getSimpleName();
 
+    @Nullable
     private String mTable = null;
+    @NonNull
     private Map<String, String> mProjectionMap = new HashMap<String, String>();
+    @NonNull
     private StringBuilder mSelection = new StringBuilder();
+    @NonNull
     private ArrayList<String> mSelectionArgs = new ArrayList<String>();
 
     /**
@@ -88,6 +94,7 @@ public class SelectionBuilder {
      *
      * @return Fluent interface
      */
+    @NonNull
     public SelectionBuilder reset() {
         mTable = null;
         mSelection.setLength(0);
@@ -125,7 +132,8 @@ public class SelectionBuilder {
      *                      {@code selection} statement. Will be automatically escaped.
      * @return Fluent interface
      */
-    public SelectionBuilder where(String selection, String... selectionArgs) {
+    @NonNull
+    public SelectionBuilder where(String selection, @Nullable String... selectionArgs) {
         if (TextUtils.isEmpty(selection)) {
             if (selectionArgs != null && selectionArgs.length > 0) {
                 throw new IllegalArgumentException(
@@ -161,6 +169,7 @@ public class SelectionBuilder {
      * @param table Table name
      * @return Fluent interface
      */
+    @NonNull
     public SelectionBuilder table(String table) {
         mTable = table;
         return this;
@@ -188,7 +197,8 @@ public class SelectionBuilder {
      * @param table Secondary table to join.
      * @return Fluent interface
      */
-    public SelectionBuilder mapToTable(String column, String table) {
+    @NonNull
+    public SelectionBuilder mapToTable(@NonNull String column, String table) {
         mProjectionMap.put(column, table + "." + column);
         return this;
     }
@@ -205,7 +215,8 @@ public class SelectionBuilder {
      * @param toClause SQL string representing data to be mapped
      * @return Fluent interface
      */
-    public SelectionBuilder map(String fromColumn, String toClause) {
+    @NonNull
+    public SelectionBuilder map(@NonNull String fromColumn, String toClause) {
         mProjectionMap.put(fromColumn, toClause + " AS " + fromColumn);
         return this;
     }
@@ -216,6 +227,7 @@ public class SelectionBuilder {
      * @return Current selection as a SQL statement
      * @see #getSelectionArgs()
      */
+    @NonNull
     public String getSelection() {
         return mSelection.toString();
 
@@ -257,6 +269,7 @@ public class SelectionBuilder {
      *
      * @return Human-readable internal state
      */
+    @NonNull
     @Override
     public String toString() {
         return "SelectionBuilder[table=" + mTable + ", selection=" + getSelection()
@@ -276,7 +289,7 @@ public class SelectionBuilder {
      * @return A {@link Cursor} object, which is positioned before the first entry. Note that
      *         {@link Cursor}s are not synchronized, see the documentation for more details.
      */
-    public Cursor query(SQLiteDatabase db, String[] columns, String orderBy) {
+    public Cursor query(@NonNull SQLiteDatabase db, String[] columns, String orderBy) {
         return query(db, columns, null, null, orderBy, null);
     }
 
@@ -302,7 +315,7 @@ public class SelectionBuilder {
      * @return A {@link Cursor} object, which is positioned before the first entry. Note that
      *         {@link Cursor}s are not synchronized, see the documentation for more details.
      */
-    public Cursor query(SQLiteDatabase db, String[] columns, String groupBy,
+    public Cursor query(@NonNull SQLiteDatabase db, @Nullable String[] columns, String groupBy,
                         String having, String orderBy, String limit) {
         assertTable();
         if (columns != null) mapColumns(columns);
@@ -319,7 +332,7 @@ public class SelectionBuilder {
      *               be translated to NULL
      * @return The number of rows affected.
      */
-    public int update(SQLiteDatabase db, ContentValues values) {
+    public int update(@NonNull SQLiteDatabase db, ContentValues values) {
         assertTable();
         Log.v(TAG, "update() " + this);
         return db.update(mTable, values, getSelection(), getSelectionArgs());
@@ -331,7 +344,7 @@ public class SelectionBuilder {
      * @param db Database to query.
      * @return The number of rows affected.
      */
-    public int delete(SQLiteDatabase db) {
+    public int delete(@NonNull SQLiteDatabase db) {
         assertTable();
         Log.v(TAG, "delete() " + this);
         return db.delete(mTable, getSelection(), getSelectionArgs());

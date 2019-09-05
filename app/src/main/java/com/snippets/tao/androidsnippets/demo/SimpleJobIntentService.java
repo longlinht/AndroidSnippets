@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
 import android.util.Log;
 import android.widget.Toast;
@@ -24,12 +25,12 @@ public class SimpleJobIntentService extends JobIntentService {
     /**
      * Convenience method for enqueuing work in to this service.
      */
-    public static void enqueueWork(Context context, Intent work) {
+    public static void enqueueWork(@NonNull Context context, @NonNull Intent work) {
         enqueueWork(context, SimpleJobIntentService.class, JOB_ID, work);
     }
 
     @Override
-    protected void onHandleWork(Intent intent) {
+    protected void onHandleWork(@NonNull Intent intent) {
         // We have received work to do.  The system or framework is already
         // holding a wake lock for us at this point, so we can just go.
         Log.i("SimpleJobIntentService", "Executing work: " + intent);

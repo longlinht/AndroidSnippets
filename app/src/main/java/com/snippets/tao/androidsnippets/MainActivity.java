@@ -3,6 +3,10 @@ package com.snippets.tao.androidsnippets;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,14 +16,20 @@ import android.widget.Toast;
 import com.snippets.tao.androidsnippets.demo.AgorithmImpl;
 import com.snippets.tao.androidsnippets.demo.SimpleJobIntentService;
 import com.snippets.tao.androidsnippets.demo.ThreadLocalDemo;
+import com.snippets.tao.androidsnippets.demo.handler.Main;
 import com.snippets.tao.androidsnippets.ui.PageUpDownAnimation;
 import com.snippets.tao.androidsnippets.utils.PermissionConstant;
 import com.snippets.tao.androidsnippets.utils.PermissionUtils;
 import com.snippets.tao.androidsnippets.utils.ScreenshotManager;
 
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Supplier;
+
 public class MainActivity extends AppCompatActivity implements ScreenshotManager.OnScreenshotTakenListener{
 
     private ScreenshotManager mScreenshotManager;
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +45,21 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
             }
         });
 
-        //ThreadLocalDemo.test();
-        AgorithmImpl.test();
+        new Main().start();
 
+        //ThreadLocalDemo.test();
+        //AgorithmImpl.test();
+
+        /*
         try {
             ThreadLocalDemo.startDemo();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        */
+
+        //Objects.requireNonNull(getScreenshotManager()).startScreenshotObserver();
+        //Optional.of(getScreenshotManager()).ifPresent(ScreenshotManager::startScreenshotObserver);
         /*
         TextView pageDownView = (TextView)findViewById(R.id.pageDownView);
         TextView pageUpView = (TextView)findViewById(R.id.pageUpView);
@@ -52,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
 
         PermissionUtils.checkReadStoragePermission(this);
         */
+        resolve(()->getScreenshotManager()).ifPresent(ScreenshotManager::startScreenshotObserver);
 
 
         /*
@@ -91,5 +109,29 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
                 finish();
             }
         }
+    }
+
+    private ScreenshotManager getScreenshotManager() {
+        return new ScreenshotManager(this, null);
+        //return null;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static <T> Optional<T> resolve(Supplier<T> resolver) {
+        try {
+            T result = resolver.get();
+            return Optional.ofNullable(result);
+        }
+        catch (NullPointerException e) {
+            // 可能会抛出空指针异常，直接返回一个空的 Optional 对象
+            return Optional.empty();
+        }
+    }
+
+    static void log(Object x) {
+        System.out.println(x.toString());
+    }
+    static void foo() {
+        log(null);
     }
 }

@@ -3,6 +3,7 @@ package com.snippets.tao.androidsnippets.utils;
 import android.animation.*;
 import android.graphics.*;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -23,11 +24,11 @@ public class AnimationUtils {
     private static final float DEFAULT_ALPH_TO = 0.4f;
     private static final int DEFAULT_SAMPLE_POINT_COUNT = 300;
 
-    public static void setScaleAnimator(final View view, final float scaleFrom, final float scaleTo) {
+    public static void setScaleAnimator(@NonNull final View view, final float scaleFrom, final float scaleTo) {
         setScaleAnimator(view, scaleFrom, scaleTo, DEFAULT_ALPH_FROM, DEFAULT_ALPH_TO);
     }
 
-    public static void setScaleAnimator(final View view, final float scaleFrom, final float scaleTo,
+    public static void setScaleAnimator(@NonNull final View view, final float scaleFrom, final float scaleTo,
                                         final float alphFrom, final float alphTo) {
 
         setScaleAnimator(view, scaleFrom, scaleTo, alphFrom, alphTo,
@@ -35,7 +36,7 @@ public class AnimationUtils {
     }
 
 
-    public static void setScaleAnimator(final View view, final float scaleFrom, final float scaleTo,
+    public static void setScaleAnimator(@NonNull final View view, final float scaleFrom, final float scaleTo,
                                         final float alphFrom, final float alphTo, final float fractionTime,
                                         final long duration) {
         Keyframe scaleFrameFrom = Keyframe.ofFloat(fractionTime, scaleFrom);
@@ -102,7 +103,7 @@ public class AnimationUtils {
         }
 
         @Override
-        public boolean onTouch(View v, MotionEvent event) {
+        public boolean onTouch(@NonNull View v, @NonNull MotionEvent event) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     animator.start();
@@ -136,20 +137,20 @@ public class AnimationUtils {
     }
 
 
-    private static boolean pointInView(View view, float localX, float localY, float slop) {
+    private static boolean pointInView(@NonNull View view, float localX, float localY, float slop) {
         return localX >= -slop
                && localY >= -slop
                && localX < ((view.getRight() - view.getLeft()) + slop)
                && localY < ((view.getBottom() - view.getTop()) + slop);
     }
 
-    public static Animator setupBackgroundAnimator(final View view, final String color, final long duration,
+    public static Animator setupBackgroundAnimator(@NonNull final View view, @NonNull final String color, final long duration,
                                                    final boolean autoStart) {
 
         return setupBackgroundAnimator(view, color, DEFAULT_SAMPLE_POINT_COUNT, duration, autoStart);
     }
 
-    public static Animator setupBackgroundAnimator(final View view, final String color, final int samplePtCount,
+    public static Animator setupBackgroundAnimator(@NonNull final View view, @NonNull final String color, final int samplePtCount,
                                                    final long duration, final boolean autoStart) {
 
         final BackAnimationDrawable d = new BackAnimationDrawable(color, samplePtCount);
@@ -159,7 +160,7 @@ public class AnimationUtils {
         view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
 
             @Override
-            public void onViewDetachedFromWindow(View v) {
+            public void onViewDetachedFromWindow(@NonNull View v) {
                 animator.end();
                 v.removeOnAttachStateChangeListener(this);
             }
@@ -172,7 +173,7 @@ public class AnimationUtils {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
                 float value = (Float) animation.getAnimatedValue();
                 d.update(value);
             }
@@ -201,7 +202,7 @@ public class AnimationUtils {
         }
 
         @Override
-        public void onAnimationEnd(Animator paramAnimator) {
+        public void onAnimationEnd(@NonNull Animator paramAnimator) {
             count++;
             if (count < maxCount) {
                 paramAnimator.setStartDelay(delay);
@@ -224,10 +225,12 @@ public class AnimationUtils {
 
     private static class BackAnimationDrawable extends Drawable {
 
+        @NonNull
         private final BezierCurve mCurve;
 
         private Paint mPaint;
         private float mAnimaValue;
+        @NonNull
         private DecelerateInterpolator mInterpolator = new DecelerateInterpolator();
         private int mColor;
 
@@ -256,7 +259,7 @@ public class AnimationUtils {
         }
 
         @Override
-        public void draw(Canvas canvas) {
+        public void draw(@NonNull Canvas canvas) {
             Rect r = getBounds();
             int width = r.width();
             int centerX = r.centerX();

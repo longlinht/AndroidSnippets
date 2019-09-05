@@ -12,6 +12,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.widget.ImageView;
@@ -28,6 +30,7 @@ public abstract class ImageWorker {
     private static final String TAG = "ImageWorker";
     private static final int FADE_IN_TIME = 200;
 
+    @Nullable
     private ImageCache mImageCache;
     private ImageCache.ImageCacheParams mImageCacheParams;
     private Bitmap mLoadingBitmap;
@@ -59,7 +62,7 @@ public abstract class ImageWorker {
      * @param imageView The ImageView to bind the downloaded image to.
      * @param listener A listener that will be called back once the image has been loaded.
      */
-    public void loadImage(Object data, ImageView imageView, OnImageLoadedListener listener) {
+    public void loadImage(@Nullable Object data, @NonNull ImageView imageView, @Nullable OnImageLoadedListener listener) {
         if (data == null) {
             return;
         }
@@ -102,7 +105,7 @@ public abstract class ImageWorker {
      * @param data The URL of the image to download.
      * @param imageView The ImageView to bind the downloaded image to.
      */
-    public void loadImage(Object data, ImageView imageView) {
+    public void loadImage(Object data, @NonNull ImageView imageView) {
         loadImage(data, imageView, null);
     }
 
@@ -130,8 +133,8 @@ public abstract class ImageWorker {
      * @param fragmentManager
      * @param cacheParams The cache parameters to use for the image cache.
      */
-    public void addImageCache(FragmentManager fragmentManager,
-            ImageCache.ImageCacheParams cacheParams) {
+    public void addImageCache(@NonNull FragmentManager fragmentManager,
+                              ImageCache.ImageCacheParams cacheParams) {
         mImageCacheParams = cacheParams;
         mImageCache = ImageCache.getInstance(fragmentManager, mImageCacheParams);
         new CacheAsyncTask().execute(MESSAGE_INIT_DISK_CACHE);
@@ -144,7 +147,7 @@ public abstract class ImageWorker {
      * @param diskCacheDirectoryName See
      * {@link ImageCache.ImageCacheParams#ImageCacheParams(android.content.Context, String)}.
      */
-    public void addImageCache(FragmentActivity activity, String diskCacheDirectoryName) {
+    public void addImageCache(@NonNull FragmentActivity activity, String diskCacheDirectoryName) {
         mImageCacheParams = new ImageCache.ImageCacheParams(activity, diskCacheDirectoryName);
         mImageCache = ImageCache.getInstance(activity.getSupportFragmentManager(), mImageCacheParams);
         new CacheAsyncTask().execute(MESSAGE_INIT_DISK_CACHE);
@@ -176,6 +179,7 @@ public abstract class ImageWorker {
     /**
      * @return The {@link ImageCache} object currently being used by this ImageWorker.
      */
+    @Nullable
     protected ImageCache getImageCache() {
         return mImageCache;
     }
@@ -219,7 +223,8 @@ public abstract class ImageWorker {
      * @return Retrieve the currently active work task (if any) associated with this imageView.
      * null if there is no such task.
      */
-    private static BitmapWorkerTask getBitmapWorkerTask(ImageView imageView) {
+    @Nullable
+    private static BitmapWorkerTask getBitmapWorkerTask(@Nullable ImageView imageView) {
         if (imageView != null) {
             final Drawable drawable = imageView.getDrawable();
             if (drawable instanceof AsyncDrawable) {
@@ -235,7 +240,9 @@ public abstract class ImageWorker {
      */
     private class BitmapWorkerTask extends AsyncTask<Void, Void, BitmapDrawable> {
         private Object mData;
+        @NonNull
         private final WeakReference<ImageView> imageViewReference;
+        @Nullable
         private final OnImageLoadedListener mOnImageLoadedListener;
 
         public BitmapWorkerTask(Object data, ImageView imageView) {
@@ -253,6 +260,7 @@ public abstract class ImageWorker {
         /**
          * Background processing.
          */
+        @Nullable
         @Override
         protected BitmapDrawable doInBackground(Void... params) {
             //BEGIN_INCLUDE(load_bitmap_in_background)
@@ -379,6 +387,7 @@ public abstract class ImageWorker {
      * independently of the finish order.
      */
     private static class AsyncDrawable extends BitmapDrawable {
+        @NonNull
         private final WeakReference<BitmapWorkerTask> bitmapWorkerTaskReference;
 
         public AsyncDrawable(Resources res, Bitmap bitmap, BitmapWorkerTask bitmapWorkerTask) {
@@ -399,7 +408,7 @@ public abstract class ImageWorker {
      * @param imageView
      * @param drawable
      */
-    private void setImageDrawable(ImageView imageView, Drawable drawable) {
+    private void setImageDrawable(@NonNull ImageView imageView, Drawable drawable) {
         if (mFadeInBitmap) {
             // Transition drawable with a transparent drawable and the final drawable
             final TransitionDrawable td =
@@ -441,6 +450,7 @@ public abstract class ImageWorker {
 
     protected class CacheAsyncTask extends AsyncTask<Object, Void, Void> {
 
+        @Nullable
         @Override
         protected Void doInBackground(Object... params) {
             switch ((Integer)params[0]) {

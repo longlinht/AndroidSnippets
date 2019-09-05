@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -19,7 +20,7 @@ import static android.Manifest.permission_group.CAMERA;
 
 public class PermissionUtils {
 
-    public static boolean checkReadStoragePermission(Activity activity) {
+    public static boolean checkReadStoragePermission(@NonNull Activity activity) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             return true;
         }

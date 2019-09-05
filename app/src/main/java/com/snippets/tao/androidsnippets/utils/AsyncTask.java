@@ -21,6 +21,7 @@ import android.annotation.TargetApi;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayDeque;
 import java.util.concurrent.BlockingQueue;
@@ -237,9 +238,12 @@ public abstract class AsyncTask<Params, Progress, Result> {
     private static final InternalHandler sHandler = new InternalHandler();
 
     private static volatile Executor sDefaultExecutor = SERIAL_EXECUTOR;
+    @NonNull
     private final WorkerRunnable<Params, Result> mWorker;
+    @NonNull
     private final FutureTask<Result> mFuture;
 
+    @NonNull
     private volatile Status mStatus = Status.PENDING;
 
     private final AtomicBoolean mCancelled = new AtomicBoolean();
@@ -250,7 +254,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
         final ArrayDeque<Runnable> mTasks = new ArrayDeque<Runnable>();
         Runnable mActive;
 
-        public synchronized void execute(final Runnable r) {
+        public synchronized void execute(@NonNull final Runnable r) {
             mTasks.offer(new Runnable() {
                 public void run() {
                     try {
@@ -352,6 +356,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
      *
      * @return The current status.
      */
+    @NonNull
     public final Status getStatus() {
         return mStatus;
     }
@@ -557,6 +562,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
      * @see #executeOnExecutor(java.util.concurrent.Executor, Object[])
      * @see #execute(Runnable)
      */
+    @NonNull
     public final AsyncTask<Params, Progress, Result> execute(Params... params) {
         return executeOnExecutor(sDefaultExecutor, params);
     }
@@ -594,7 +600,8 @@ public abstract class AsyncTask<Params, Progress, Result> {
      *
      * @see #execute(Object[])
      */
-    public final AsyncTask<Params, Progress, Result> executeOnExecutor(Executor exec,
+    @NonNull
+    public final AsyncTask<Params, Progress, Result> executeOnExecutor(@NonNull Executor exec,
                                                                        Params... params) {
         if (mStatus != Status.PENDING) {
             switch (mStatus) {
@@ -663,7 +670,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
     private static class InternalHandler extends Handler {
         @SuppressWarnings({"unchecked", "RawUseOfParameterizedType"})
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             AsyncTaskResult result = (AsyncTaskResult) msg.obj;
             switch (msg.what) {
                 case MESSAGE_POST_RESULT:

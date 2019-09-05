@@ -1,5 +1,7 @@
 package com.snippets.tao.androidsnippets.demo;
 
+import android.support.annotation.NonNull;
+
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -48,7 +50,7 @@ public class ThreadLocalDemo {
                     Counter.counter.get().toString());
         }
 
-        public void set(String words) {
+        public void set(@NonNull String words) {
             Counter.counter.set(new StringBuilder(words));
             System.out.printf("Set, Thread name:%s , ThreadLocal hashcode:%s,  Instance hashcode:%s, Value:%s\n",
                     Thread.currentThread().getName(),
@@ -60,6 +62,7 @@ public class ThreadLocalDemo {
 
     private static class Counter {
 
+        @NonNull
         private static ThreadLocal<StringBuilder> counter = new ThreadLocal<StringBuilder>() {
             @Override
             protected StringBuilder initialValue() {

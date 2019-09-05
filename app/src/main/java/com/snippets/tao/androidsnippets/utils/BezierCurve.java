@@ -1,5 +1,7 @@
 package com.snippets.tao.androidsnippets.utils;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by Tao He on 16-7-13.
  * Email: hetaoof@gmail.com
@@ -7,7 +9,7 @@ package com.snippets.tao.androidsnippets.utils;
 public class BezierCurve {
     private float[] mSamplePt;
 
-    public BezierCurve(float[] controlPoints, int sampleCount) {
+    public BezierCurve(@NonNull float[] controlPoints, int sampleCount) {
         mSamplePt = new float[sampleCount * 2];
         Init(controlPoints);
     }
