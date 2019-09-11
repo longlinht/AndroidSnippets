@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
             }
         });
 
-        new Main().start();
+        //new Main().start();
 
         //ThreadLocalDemo.test();
         //AgorithmImpl.test();
