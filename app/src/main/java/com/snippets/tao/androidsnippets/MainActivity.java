@@ -17,6 +17,9 @@ import com.snippets.tao.androidsnippets.demo.AgorithmImpl;
 import com.snippets.tao.androidsnippets.demo.SimpleJobIntentService;
 import com.snippets.tao.androidsnippets.demo.ThreadLocalDemo;
 import com.snippets.tao.androidsnippets.demo.handler.Main;
+import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintLettersWithSemaphore;
+import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintThreadWithReentrantLock;
+import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintThreadWithSync;
 import com.snippets.tao.androidsnippets.ui.PageUpDownAnimation;
 import com.snippets.tao.androidsnippets.utils.PermissionConstant;
 import com.snippets.tao.androidsnippets.utils.PermissionUtils;
@@ -24,6 +27,9 @@ import com.snippets.tao.androidsnippets.utils.ScreenshotManager;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
 public class MainActivity extends AppCompatActivity implements ScreenshotManager.OnScreenshotTakenListener{
@@ -44,6 +50,15 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
                 SimpleJobIntentService.enqueueWork(MainActivity.this, intent);
             }
         });
+
+        //PrintLettersWithSemaphore letters = new PrintLettersWithSemaphore();
+        //letters.start();
+        //PrintThreadWithSync printThreadWithSync = new PrintThreadWithSync();
+        //printThreadWithSync.start();
+        PrintThreadWithReentrantLock printThreadWithReentrantLock = new PrintThreadWithReentrantLock();
+        printThreadWithReentrantLock.start();
+
+
 
         //new Main().start();
 
