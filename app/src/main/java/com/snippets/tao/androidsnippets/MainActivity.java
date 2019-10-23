@@ -42,6 +42,7 @@ import com.snippets.tao.androidsnippets.demo.UrlImageSpan;
 import com.snippets.tao.androidsnippets.demo.handler.Main;
 import com.snippets.tao.androidsnippets.source.audiovideo.chapter1.DrawPicActivity;
 import com.snippets.tao.androidsnippets.source.audiovideo.chapter2.AudioRecordActivity;
+import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.CameraActivity;
 import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintLettersWithSemaphore;
 import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintThreadWithReentrantLock;
 import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintThreadWithSync;
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AudioRecordActivity.class);
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 MainActivity.this.startActivity(intent);
                 //SimpleJobIntentService.enqueueWork(MainActivity.this, intent);
             }
