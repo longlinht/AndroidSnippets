@@ -26,8 +26,8 @@ public class CustomView extends View {
     public CustomView(@NonNull Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
 
-        TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.CustomView);
-        mDefaultSize = a.getDimensionPixelSize(R.styleable.CustomView_default_size, 100);
+        TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.DrawCustomView);
+        mDefaultSize = a.getDimensionPixelSize(R.styleable.DrawCustomView_default_size, 100);
         a.recycle();
     }
 
