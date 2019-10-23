@@ -5,8 +5,13 @@ import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 
 import android.hardware.Camera;
+import android.media.MediaCodec;
+import android.media.MediaExtractor;
+import android.media.MediaFormat;
+import android.media.MediaMuxer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +24,7 @@ import android.view.TextureView;
 import com.snippets.tao.androidsnippets.R;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +36,10 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     private static final int MY_PERMISSIONS_REQUEST = 1001;
     private static final String TAG = "htdebug";
+
+    private static final String SDCARD_PATH = Environment.getExternalStorageDirectory().getPath();
+    private MediaExtractor mediaExtractor;
+    private MediaMuxer mediaMuxer;
 
     /**
      * 需要申请的运行时权限
@@ -64,6 +74,17 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
         mCamera = Camera.open();
         mCamera.setDisplayOrientation(90);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    process();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -151,4 +172,48 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 
     }
+
+    private void process() throws IOException {
+        mediaExtractor = new MediaExtractor();
+        mediaExtractor.setDataSource(SDCARD_PATH + "/a.mp4");
+
+        int videoTrackIndex = -1;
+        int frameRate = 0;
+
+        for(int i=0; i<mediaExtractor.getTrackCount(); i++) {
+            MediaFormat format = mediaExtractor.getTrackFormat(i);
+            String mime = format.getString(MediaFormat.KEY_MIME);
+            if (!mime.startsWith("video/")) {
+                continue;
+            }
+
+            frameRate = format.getInteger(MediaFormat.KEY_FRAME_RATE);
+            mediaExtractor.selectTrack(i);
+            mediaMuxer = new MediaMuxer(SDCARD_PATH + "/output.mp4", MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+            videoTrackIndex = mediaMuxer.addTrack(format);
+            mediaMuxer.start();
+        }
+
+        if (mediaMuxer == null)
+            return;
+
+        MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
+        info.presentationTimeUs = 0;
+        ByteBuffer buffer = ByteBuffer.allocate(500 * 1024);
+        int sampleSize = 0;
+        while((sampleSize = mediaExtractor.readSampleData(buffer, 0)) > 0) {
+            info.offset = 0;
+            info.size = sampleSize;
+            info.flags = MediaCodec.BUFFER_FLAG_SYNC_FRAME;
+            info.presentationTimeUs += 1000 * 1000 / frameRate;
+            mediaMuxer.writeSampleData(videoTrackIndex, buffer, info);
+            mediaExtractor.advance();
+        }
+
+        mediaExtractor.release();
+
+        mediaMuxer.stop();
+        mediaMuxer.release();
+    }
+
 }
