@@ -48,6 +48,9 @@
         <activity android:name=".source.audiovideo.chapter3.CameraActivity">
         </activity>
 
+        <activity android:name=".demo.jni.HelloJniActivity">
+        </activity>
+
         <service android:name=".SkypeCallService"
             android:process=":call_by_skype"
             android:enabled="true"
