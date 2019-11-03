@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/tao/AndroidSnippets/AndroidLearn/app/.externalNativeBuild/cmake/arm7Release/armeabi-v7a",
+  "command": "/Users/tao/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=armv7-none-linux-androideabi19 --gcc-toolchain=/Users/tao/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/tao/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dhello_jni_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security  -Oz -DNDEBUG  -fPIC   -o CMakeFiles/hello-jni.dir/hello-jni.c.o   -c /Users/tao/AndroidSnippets/AndroidLearn/app/src/main/cpp/hello-jni.c",
+  "file": "/Users/tao/AndroidSnippets/AndroidLearn/app/src/main/cpp/hello-jni.c"
+}
+]

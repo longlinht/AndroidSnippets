@@ -1,0 +1,19 @@
+Executable : /Users/tao/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake
+arguments : 
+-H/Users/tao/AndroidSnippets/AndroidLearn/app/src/main/cpp
+-B/Users/tao/AndroidSnippets/AndroidLearn/app/.externalNativeBuild/cmake/x86Release/x86
+-DANDROID_ABI=x86
+-DANDROID_PLATFORM=android-19
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/tao/AndroidSnippets/AndroidLearn/app/build/intermediates/cmake/x86/release/obj/x86
+-DCMAKE_BUILD_TYPE=Release
+-DANDROID_NDK=/Users/tao/Library/Android/sdk/ndk-bundle
+-DCMAKE_SYSTEM_NAME=Android
+-DCMAKE_ANDROID_ARCH_ABI=x86
+-DCMAKE_SYSTEM_VERSION=19
+-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+-DCMAKE_ANDROID_NDK=/Users/tao/Library/Android/sdk/ndk-bundle
+-DCMAKE_TOOLCHAIN_FILE=/Users/tao/Library/Android/sdk/ndk-bundle/build/cmake/android.toolchain.cmake
+-G Ninja
+-DCMAKE_MAKE_PROGRAM=/Users/tao/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
+jvmArgs : 
+
