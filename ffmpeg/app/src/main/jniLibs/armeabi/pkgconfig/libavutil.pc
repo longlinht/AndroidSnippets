@@ -1,0 +1,14 @@
+prefix=/Users/tao/Downloads/ffmpeg-4.0.4/ffmpegtemp
+exec_prefix=${prefix}
+libdir=/Users/tao/Downloads/ffmpeg-4.0.4/ffmpegtemp/lib
+includedir=/Users/tao/Downloads/ffmpeg-4.0.4/ffmpegtemp/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 56.14.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil 
+Libs.private: -pthread -lm
+Cflags: -I${includedir}

@@ -1,0 +1,14 @@
+prefix=/Users/tao/Downloads/ffmpeg-4.0.4/ffmpegtemp
+exec_prefix=${prefix}
+libdir=/Users/tao/Downloads/ffmpeg-4.0.4/ffmpegtemp/lib
+includedir=/Users/tao/Downloads/ffmpeg-4.0.4/ffmpegtemp/include
+
+Name: libswscale
+Description: FFmpeg image rescaling library
+Version: 5.1.100
+Requires: 
+Requires.private: libavutil >= 56.14.100
+Conflicts:
+Libs: -L${libdir}  -lswscale 
+Libs.private: -lm
+Cflags: -I${includedir}

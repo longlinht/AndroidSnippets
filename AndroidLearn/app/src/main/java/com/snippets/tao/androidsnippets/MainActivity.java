@@ -44,6 +44,7 @@ import com.snippets.tao.androidsnippets.demo.jni.HelloJniActivity;
 import com.snippets.tao.androidsnippets.source.audiovideo.chapter1.DrawPicActivity;
 import com.snippets.tao.androidsnippets.source.audiovideo.chapter2.AudioRecordActivity;
 import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.CameraActivity;
+import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.H264Activity;
 import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintLettersWithSemaphore;
 import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintThreadWithReentrantLock;
 import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintThreadWithSync;
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HelloJniActivity.class);
+                Intent intent = new Intent(MainActivity.this, H264Activity.class);
                 MainActivity.this.startActivity(intent);
                 //SimpleJobIntentService.enqueueWork(MainActivity.this, intent);
             }
@@ -165,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         //letters.start();
         //PrintThreadWithSync printThreadWithSync = new PrintThreadWithSync();
         //printThreadWithSync.start();
-        PrintThreadWithReentrantLock printThreadWithReentrantLock = new PrintThreadWithReentrantLock();
-        printThreadWithReentrantLock.start();
+        //PrintThreadWithReentrantLock printThreadWithReentrantLock = new PrintThreadWithReentrantLock();
+        //printThreadWithReentrantLock.start();
 
 
 
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
 
         PermissionUtils.checkReadStoragePermission(this);
         */
-        resolve(()->getScreenshotManager()).ifPresent(ScreenshotManager::startScreenshotObserver);
+        //resolve(()->getScreenshotManager()).ifPresent(ScreenshotManager::startScreenshotObserver);
 
 
         /*

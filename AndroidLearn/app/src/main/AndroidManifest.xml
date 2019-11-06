@@ -48,6 +48,9 @@
         <activity android:name=".source.audiovideo.chapter3.CameraActivity">
         </activity>
 
+        <activity android:name=".source.audiovideo.chapter3.H264Activity">
+        </activity>
+
         <activity android:name=".demo.jni.HelloJniActivity">
         </activity>
 

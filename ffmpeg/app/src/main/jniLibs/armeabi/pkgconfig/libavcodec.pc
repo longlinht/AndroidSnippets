@@ -1,0 +1,14 @@
+prefix=/Users/tao/Downloads/ffmpeg-4.0.4/ffmpegtemp
+exec_prefix=${prefix}
+libdir=/Users/tao/Downloads/ffmpeg-4.0.4/ffmpegtemp/lib
+includedir=/Users/tao/Downloads/ffmpeg-4.0.4/ffmpegtemp/include
+
+Name: libavcodec
+Description: FFmpeg codec library
+Version: 58.18.100
+Requires: 
+Requires.private: libswresample >= 3.1.100, libavutil >= 56.14.100
+Conflicts:
+Libs: -L${libdir}  -lavcodec 
+Libs.private: -pthread -lm -lz
+Cflags: -I${includedir}
