@@ -25,8 +25,14 @@ public class AgorithmImpl {
         listB.add(9);
 
         //arraySub(listA, listB);
-        arraySubBySet(listA, listB);
+        //arraySubBySet(listA, listB);
 
+        int[] a = new int[] {4, 5, 8, 2, 7, 1};
+        insertSort(a);
+
+        for (int i : a ) {
+            Log.d("htdebug", "result:" + i);
+        }
     }
     // a is array, b is array
     // a - b = remove element in a and in b
@@ -84,5 +90,20 @@ public class AgorithmImpl {
         }
     }
 
+    // insert sort
+    public static void insertSort(int[] array) {
+        int size = array.length;
+
+        for(int i=1; i<size; i++) {
+            int key = array[i];
+
+            int j = i - 1;
+            while (j >= 0 && array[j] > key) {
+                array[j+1] = array[j];
+                j--;
+            }
+            array[j+1] = key;
+        }
+    }
 
 }

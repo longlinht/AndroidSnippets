@@ -273,7 +273,7 @@ public class SystemUtils {
             Class<?> localClass;
             try {
                 localClass = Class.forName("com.android.internal.R$dimen");
-                Object localObject = localClass.newInstance();
+                Object localObject = localClass.getConstructor().newInstance();
                 int i5 = Integer.parseInt(localClass.getField("status_bar_height").get(localObject).toString());
                 statusHeight = context.getResources().getDimensionPixelSize(i5);
             } catch (Exception e) {

@@ -33,6 +33,7 @@ public class ImageSpanActivity extends AppCompatActivity {
 
     private TextView mContent;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_span);

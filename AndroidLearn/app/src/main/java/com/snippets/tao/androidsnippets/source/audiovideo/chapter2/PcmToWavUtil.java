@@ -56,7 +56,7 @@ public class PcmToWavUtil {
         long totalDataLen;
         long longSampleRate = mSampleRate;
         int channels = mChannel == AudioFormat.CHANNEL_IN_MONO ? 1 : 2;
-        long byteRate = 16 * mSampleRate * channels / 8;
+        long byteRate = 16 * mSampleRate * channels / (long)8;
         byte[] data = new byte[mBufferSize];
         try {
             in = new FileInputStream(inFilename);

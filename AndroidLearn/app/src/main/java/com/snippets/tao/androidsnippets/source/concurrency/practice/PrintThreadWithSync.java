@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
  *
  */
 public class PrintThreadWithSync {
-    private Letters letters = new Letters();
+    final private Letters letters = new Letters();
 
     public void start() {
         System.out.println("-----------------------------------------");

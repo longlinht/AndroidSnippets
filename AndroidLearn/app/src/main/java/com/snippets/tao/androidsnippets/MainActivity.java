@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         //new Main().start();
 
         //ThreadLocalDemo.test();
-        //AgorithmImpl.test();
+        AgorithmImpl.test();
 
         /*
         try {
