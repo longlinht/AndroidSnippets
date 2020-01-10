@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/Users/tao/AndroidSnippets/AndroidLearn/app/.externalNativeBuild/cmake/universalRelease/x86",
-  "command": "/Users/tao/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=i686-none-linux-android19 --gcc-toolchain=/Users/tao/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/tao/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dhello_jni_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security  -O2 -DNDEBUG  -fPIC   -o CMakeFiles/hello-jni.dir/hello-jni.c.o   -c /Users/tao/AndroidSnippets/AndroidLearn/app/src/main/cpp/hello-jni.c",
-  "file": "/Users/tao/AndroidSnippets/AndroidLearn/app/src/main/cpp/hello-jni.c"
-}
-]
