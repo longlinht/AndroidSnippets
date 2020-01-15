@@ -27,15 +27,30 @@ public class AgorithmImpl {
         //arraySub(listA, listB);
         //arraySubBySet(listA, listB);
 
+        /*
         int[] a = new int[] {4, 5, 8, 2, 7, 1};
         insertSort(a);
 
         for (int i : a ) {
             Log.d("htdebug", "result:" + i);
         }
+         */
+
+        Log.d("htdebug", "abcd isAllUnique:" + isUniqueChars2("abcd"));
+        Log.d("htdebug", "hello isAllUnique:" + isUniqueChars2("hello"));
+        Log.d("htdebug", "aaabbbbc isAllUnique:" + isUniqueChars2("aaabbbbc"));
+
     }
-    // a is array, b is array
-    // a - b = remove element in a and in b
+
+    /**
+     ***************************************************
+     *
+     * a is array, b is array
+     * a - b = remove element in a and in b
+     *
+     ***************************************************
+     */
+
     public static void arraySub(List<Integer> listA, List<Integer> listB) {
 
         Iterator<Integer> iteratorA = listA.iterator();
@@ -90,6 +105,12 @@ public class AgorithmImpl {
         }
     }
 
+    /**
+     *********************************************************************************
+     *
+     */
+
+
     // insert sort
     public static void insertSort(int[] array) {
         int size = array.length;
@@ -106,4 +127,54 @@ public class AgorithmImpl {
         }
     }
 
+    /**
+     *
+     * *******************************************************************************************************
+     *
+     * 1.1 Implement an algorithm to determine if a string has all unique characters What if you can not use
+     * additional data structures?
+     *
+     * *******************************************************************************************************
+     *
+     */
+
+    public static boolean isUniqueChars(final String s) {
+        if (s.length() > 128)
+            return false;
+
+        boolean charSet[] = new boolean[128];
+        for(int i=0; i<s.length(); i++) {
+            int value = s.charAt(i);
+            if (charSet[value]) {
+                return false;
+            } else {
+                charSet[value] = true;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isUniqueChars2(String str) {
+        if (str.length() > 128) {
+            return false;
+        }
+
+        int checker = 0;
+        for (int i = 0; i < str.length(); i++) {
+            //int val = str.charAt(i) - 'a';
+            int val = str.charAt(i);
+            Log.d("htdebug", "val=" + val);
+            Log.d("htdebug", "1<<val=" + (1 << val));
+            Log.d("htdebug", "checker & (1 << val)=" + (checker & (1 << val)));
+            if ((checker & (1 << val)) > 0) return false;
+            checker |= (1 << val);
+            Log.d("htdebug", "checker=" + checker);
+        }
+        return true;
+    }
+
+
+    /**
+     * *******************************************************************************************************
+     */
 }
