@@ -34,11 +34,17 @@ public class AgorithmImpl {
         for (int i : a ) {
             Log.d("htdebug", "result:" + i);
         }
-         */
 
         Log.d("htdebug", "abcd isAllUnique:" + isUniqueChars2("abcd"));
         Log.d("htdebug", "hello isAllUnique:" + isUniqueChars2("hello"));
         Log.d("htdebug", "aaabbbbc isAllUnique:" + isUniqueChars2("aaabbbbc"));
+
+        char a[] = new char[] {'a', 'b', 'b', 'd'};
+        Log.d("htdebug", "before:" +new String(a));
+        Log.d("htdebug", "after:" + removeDuplicates(a));
+         */
+
+        reverse("abcdefgh");
 
     }
 
@@ -176,5 +182,106 @@ public class AgorithmImpl {
 
     /**
      * *******************************************************************************************************
+     * Write code to reverse a C-Style String (C-String means that "abcd" is represented as five characters,
+     * including the null character )
      */
+
+    public static void reverseString(char[] chars) {
+        if (chars == null)
+            return;
+
+        if (chars.length <= 1) {
+            return;
+        }
+
+        int i = 0;
+        int j = chars.length - 1;
+        while(i < j) {
+            char temp = chars[i];
+            chars[i] = chars[j];
+            chars[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    public static void reverse(String str)
+    {
+        if ((str==null)||(str.length() <= 1)){
+            System.out.println(str);
+        }
+        else
+        {
+            System.out.print(str.charAt(str.length()-1));
+            reverse(str.substring(0,str.length()-1));
+        }
+    }
+
+    /**
+     *
+     * *******************************************************************************************************
+     */
+
+
+    /**
+     *
+     * *******************************************************************************************************
+     * Design an algorithm and write code to remove the duplicate characters in a string without using any
+     * additional buffer NOTE: One or two additional variables are fine An extra copy of the array is not
+     * FOLLOW UP
+     * Write the test cases for this method
+     * *******************************************************************************************************
+     *
+     */
+
+    public static String removeDuplicates(char[] a) {
+        if (a == null)
+            return new String(a);
+
+        int len = a.length;
+        if (len < 2)
+            return new String(a);
+
+        int index = 0;
+
+        for(int i=0; i< len; i++) {
+            int j;
+            for (j=0; j<i; j++) {
+                if (a[i] == a[j]) {
+                    break;
+                }
+            }
+
+            if (i == j) {
+                a[index++] = a[i];
+            }
+        }
+
+        return String.valueOf(Arrays.copyOf(a, index));
+    }
+
+    /**
+     *
+     * *******************************************************************************************************
+     */
+
+
+    /**
+     *
+     * *******************************************************************************************************
+     *
+     * Write a method to decide if two strings are anagrams or not
+     *
+     * *******************************************************************************************************
+     *
+     */
+
+
+
+
+    /**
+     *
+     * *******************************************************************************************************
+     */
+
 }
