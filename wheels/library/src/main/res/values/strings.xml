@@ -4,8 +4,29 @@
     <string name="ip_all_images">全部</string>
     <string name="sdcard_unavailable">SD卡不可用</string>
 
+    <string name="permission_rational_download">Mengunduh konten memerlukan akses izin Media kamu</string>
+    <string name="permission_rational_upload">Mengunggah konten memerlukan akses ke izin Media kamu</string>
+    <string name="permission_rational_contact">Untuk menemukan teman kamu, kami membutuhkan akses ke Kontak kamu</string>
+    <string name="permission_rational_phone_state">Kami membutuhkan izin Informasi Ponsel kamu untuk memberi kamu pengalaman pemutaran dan penggunaan yang lebih lancar dan nyaman</string>
 
+    <string name="permission_auth_failed_download">Gagal mendapatkan izin Media</string>
+    <string name="permission_auth_failed_upload">Gagal mendapatkan izin Media</string>
+    <string name="permission_auth_failed_contact">Gagal mendapatkan izin Kontak</string>
+    <string name="permission_auth_failed_phone_state">Gagal mendapatkan izin Informasi Ponsel</string>
 
+    <string name="permission_title_storage">Izin Media</string>
+    <string name="permission_title_camera">Izin Kamera</string>
+    <string name="permission_title_contacts">Izin Kontak</string>
+    <string name="permission_title_phone_state">Izin Informasi Ponsel</string>
+
+    <string name="permission_des_storage">Digunakan untuk memilih gambar atau video untuk diunggah dan diunduh</string>
+    <string name="permission_des_camera">Digunakan untuk mengambil gambar, mengunggah avatar, gambar, dan fungsi lain yang memerlukan akses Kamera</string>
+    <string name="permission_des_contacts">Untuk menemukan teman kamu</string>
+    <string name="permission_des_phone_state">Digunakan untuk memberikan pengalaman pemutaran dan penggunaan yang lebih lancar dan lebih nyaman</string>
+
+    <string name="permission_default_denied_message">Anda menolak izin akses</string>
+    <string name="permission_default_denied_button">ke pengaturan</string>
+    <string name="permission_default_rational_button">OK</string>
 
     <string name="app_name">坐标标准库</string>
     <string name="app_version">16.6</string>

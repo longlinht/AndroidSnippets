@@ -63,4 +63,35 @@
     <color name="btn_red_normal">#ff3b3b</color>
     <color name="btn_red_pressed">#dd0000</color>
 
+    <color name="CO_B">#FFFFFFFF</color>
+    <color name="CO_T12">#FF1F1F1F</color>
+    <color name="CO_B7">#FF1F1F1F</color>
+
+    <color name="CO_T0">#FFFFFFFF</color>
+    <color name="CO_T1">#FF000000</color>
+    <color name="CO_T2">#FF828F9F</color>
+    <color name="CO_T3">#FFACB6BF</color>
+    <color name="CO_T4">#FF333333</color>
+    <color name="CO_T5">#FF8E8E8E</color>
+    <color name="CO_T6">#FFCCCCCC</color>
+    <color name="CO_T7">#FFB3B3B3</color>
+    <color name="CO_T8">#FF828F9F</color>
+    <color name="CO_T9">#FFDEDEDE</color>
+    <color name="CO_T10">#FFFF486F</color>
+    <color name="CO_T11">#FF979797</color>
+    <color name="CO_T13">#FFBBBBBB</color>
+    <color name="CO_T14">#FF1A1A1A</color>
+    <color name="CO_T15">#FF2F2F2F</color>
+    <color name="CO_T16">#FF0B0B0B</color>
+    <color name="CO_T17">#FFFF265C</color>
+    <color name="CO_T_BLUE">#FF0CBBFF</color>
+    <color name="CO_T_YELLOW">#FFFFEE00</color>
+    <color name="CO_T_BLUE3">#FF00B9FF</color>
+    <color name="CO_T_GREEN">#FF23AE5E</color>
+    <color name="CO_T_GREEN1">#FF2AD486</color>
+    <color name="CO_T_WHITE">#FFFFFFFF</color>
+    <color name="CO_T_HINT">#FFACB6BF</color>
+    <color name="CO_T_HINT_1">#BBBBBB</color>
+
 </resources>
+
