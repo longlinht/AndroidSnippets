@@ -18,14 +18,11 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
-import android.text.style.DynamicDrawableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,30 +32,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.snippets.tao.androidsnippets.demo.AgorithmImpl;
-import com.snippets.tao.androidsnippets.demo.BgImageSpan;
-import com.snippets.tao.androidsnippets.demo.SimpleJobIntentService;
-import com.snippets.tao.androidsnippets.demo.ThreadLocalDemo;
-import com.snippets.tao.androidsnippets.demo.UrlImageSpan;
-import com.snippets.tao.androidsnippets.demo.handler.Main;
-import com.snippets.tao.androidsnippets.demo.jni.HelloJniActivity;
-import com.snippets.tao.androidsnippets.source.audiovideo.chapter1.DrawPicActivity;
-import com.snippets.tao.androidsnippets.source.audiovideo.chapter2.AudioRecordActivity;
-import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.CameraActivity;
-import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.H264Activity;
-import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintLettersWithSemaphore;
-import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintThreadWithReentrantLock;
-import com.snippets.tao.androidsnippets.source.concurrency.practice.PrintThreadWithSync;
-import com.snippets.tao.androidsnippets.ui.PageUpDownAnimation;
+import com.snippets.tao.androidsnippets.source.opengl.AirHockeyActivity;
 import com.snippets.tao.androidsnippets.utils.PermissionConstant;
-import com.snippets.tao.androidsnippets.utils.PermissionUtils;
 import com.snippets.tao.androidsnippets.utils.ScreenshotManager;
 
-import java.lang.reflect.Field;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
 public class MainActivity extends AppCompatActivity implements ScreenshotManager.OnScreenshotTakenListener{
@@ -156,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, H264Activity.class);
+                Intent intent = new Intent(MainActivity.this, AirHockeyActivity.class);
                 MainActivity.this.startActivity(intent);
                 //SimpleJobIntentService.enqueueWork(MainActivity.this, intent);
             }

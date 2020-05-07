@@ -54,6 +54,9 @@
         <activity android:name=".demo.jni.HelloJniActivity">
         </activity>
 
+        <activity android:name=".source.opengl.AirHockeyActivity">
+        </activity>
+
         <service android:name=".SkypeCallService"
             android:process=":call_by_skype"
             android:enabled="true"
