@@ -72,7 +72,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         mSurfaceView.getHolder().addCallback(this);
 
 
-        mCamera = Camera.open();
+        mCamera = Camera.open(1);
         mCamera.setDisplayOrientation(90);
 
         new Thread(new Runnable() {

@@ -29,7 +29,7 @@ public class ShaderHelper {
 
     private static final String TAG = "ShaderHelper";
 
-    public static int compileVetexShader(String shaderCode) {
+    public static int compileVertexShader(String shaderCode) {
         return compileShader(GL_VERTEX_SHADER, shaderCode);
     }
 

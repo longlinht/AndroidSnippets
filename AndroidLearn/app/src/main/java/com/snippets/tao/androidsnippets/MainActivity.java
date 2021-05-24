@@ -32,6 +32,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.snippets.tao.androidsnippets.demo.AgorithmImpl;
+import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.CameraActivity;
 import com.snippets.tao.androidsnippets.source.opengl.AirHockeyActivity;
 import com.snippets.tao.androidsnippets.utils.PermissionConstant;
 import com.snippets.tao.androidsnippets.utils.ScreenshotManager;
