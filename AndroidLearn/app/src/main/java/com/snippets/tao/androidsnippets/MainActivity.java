@@ -31,6 +31,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.snippets.tao.androidsnippets.algorithm.ctci.ArrayStringImpl;
 import com.snippets.tao.androidsnippets.demo.AgorithmImpl;
 import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.CameraActivity;
 import com.snippets.tao.androidsnippets.source.opengl.AirHockeyActivity;
@@ -153,7 +154,8 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         //new Main().start();
 
         //ThreadLocalDemo.test();
-        AgorithmImpl.test();
+        //AgorithmImpl.test();
+        ArrayStringImpl.test();
 
         /*
         try {
