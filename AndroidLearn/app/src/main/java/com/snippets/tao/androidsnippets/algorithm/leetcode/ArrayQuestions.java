@@ -1,5 +1,8 @@
 package com.snippets.tao.androidsnippets.algorithm.leetcode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Tao He on 2021/5/31.
  * hetaoof@gmail.com
@@ -36,17 +39,24 @@ public class ArrayQuestions {
         //int[] nums2 = new int[] {1};
 
         //int[] nums = new int[] {0,1,2,2,3,0,4,2};
-        int[] nums = new int[] {3, 2, 2, 3};
+        //int[] nums = new int[] {3, 2, 2, 3};
+        //int[] nums = new int[] {0,0,1,1,1,2,2,3,3,4};
+        //int[] nums = new int[] {3,1,7,11};
+        //int[] nums = new int[] {-2,0,10,-19,4,6,-8};
+        int[] nums = new int[] {0, 0};
 
         System.out.println("before:");
         printArray(nums);
 
         //merge(nums1, 1, nums2, 1);
-        int length = removeElement(nums, 3);
+        //int length = removeElement(nums, 3);
+        //int length = removeDuplicates(nums);
+        boolean exists = checkIfExist(nums);
+        System.out.println("exists:" + exists);
 
-        System.out.println("after:");
-        printArray(nums);
-        System.out.println("length:" + length);
+        //System.out.println("after:");
+        //printArray(nums);
+        //System.out.println("length:" + length);
     }
 
     /**
@@ -236,4 +246,127 @@ public class ArrayQuestions {
             return i;
         }
     }
+
+    /**
+     * Given a sorted array nums, remove the duplicates in-place such that each element appears only once and returns the new length.
+     *
+     * Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+     *
+     * Clarification:
+     *
+     * Confused why the returned value is an integer but your answer is an array?
+     *
+     * Note that the input array is passed in by reference, which means a modification to the input array will be known to the caller as well.
+     *
+     * Internally you can think of this:
+     *
+     * // nums is passed in by reference. (i.e., without making a copy)
+     * int len = removeDuplicates(nums);
+     *
+     * // any modification to nums in your function would be known by the caller.
+     * // using the length returned by your function, it prints the first len elements.
+     * for (int i = 0; i < len; i++) {
+     *     print(nums[i]);
+     * }
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [1,1,2]
+     * Output: 2, nums = [1,2]
+     * Explanation: Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the returned length.
+     * Example 2:
+     *
+     * Input: nums = [0,0,1,1,1,2,2,3,3,4]
+     * Output: 5, nums = [0,1,2,3,4]
+     * Explanation: Your function should return length = 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively. It doesn't matter what values are set beyond the returned length.
+     *
+     *
+     * Constraints:
+     *
+     * 0 <= nums.length <= 3 * 104
+     * -104 <= nums[i] <= 104
+     * nums is sorted in ascending order.
+     *
+     */
+
+    public static int removeDuplicates(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return 0;
+        int n = nums.length;
+        int cur = nums[0];
+        int preIndex = 0;
+        for(int i = 0; i < n; i++) {
+            if (nums[i] != cur) {
+                preIndex++;
+                nums[preIndex] = nums[i];
+                cur = nums[i];
+            }
+        }
+        return preIndex + 1;
+    }
+
+
+    /**
+     * Given an array arr of integers, check if there exists two integers N and M such that N is the double of
+     * M ( i.e. N = 2 * M).
+     *
+     * More formally check if there exists two indices i and j such that :
+     *
+     * i != j
+     * 0 <= i, j < arr.length
+     * arr[i] == 2 * arr[j]
+     *
+     *
+     * Example 1:
+     *
+     * Input: arr = [10,2,5,3]
+     * Output: true
+     * Explanation: N = 10 is the double of M = 5,that is, 10 = 2 * 5.
+     *
+     * Example 2:
+     *
+     * Input: arr = [7,1,14,11]
+     * Output: true
+     * Explanation: N = 14 is the double of M = 7,that is, 14 = 2 * 7.
+     * Example 3:
+     *
+     * Input: arr = [3,1,7,11]
+     * Output: false
+     * Explanation: In this case does not exist N and M, such that N = 2 * M.
+     *
+     *
+     * Constraints:
+     *
+     * 2 <= arr.length <= 500
+     * -10^3 <= arr[i] <= 10^3
+     *
+     */
+    public static boolean checkIfExist(int[] arr) {
+        if (arr == null || arr.length == 0)
+            return false;
+        int n = arr.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        int zeroCount = 0;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] != 0) {
+                map.put(arr[i], i);
+            } else {
+                zeroCount++;
+            }
+
+            if (zeroCount > 1) {
+                return true;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            int twoTimes = arr[i] * 2;
+            if (map.get(twoTimes) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
