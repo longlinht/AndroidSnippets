@@ -45,7 +45,8 @@ public class ArrayQuestions {
         //int[] nums = new int[] {3,1,7,11};
         //int[] nums = new int[] {-2,0,10,-19,4,6,-8};
         //int[] nums = new int[] {0, 0};
-        int[] nums = new int[] {2,1,2,3,5,7,9,10,12,14,15,16,18,14,13};
+        //int[] nums = new int[] {2,1,2,3,5,7,9,10,12,14,15,16,18,14,13};
+        int[] nums = new int[] {0,1,0,3,12};
 
         System.out.println("before:");
         printArray(nums);
@@ -54,11 +55,12 @@ public class ArrayQuestions {
         //int length = removeElement(nums, 3);
         //int length = removeDuplicates(nums);
         //boolean exists = checkIfExist(nums);
-        boolean valid = validMountainArray(nums);
-        System.out.println("valid:" + valid);
+        //boolean valid = validMountainArray(nums);
+        //System.out.println("valid:" + valid);
+        moveZeroes(nums);
 
-        //System.out.println("after:");
-        //printArray(nums);
+        System.out.println("after:");
+        printArray(nums);
         //System.out.println("length:" + length);
     }
 
@@ -636,6 +638,7 @@ public class ArrayQuestions {
     }
 
     /**
+     * LeetCode 283. Move Zeroes
      *
      * Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
      *
@@ -664,7 +667,23 @@ public class ArrayQuestions {
      *
      */
     public static void moveZeroes(int[] nums) {
-
+        if (nums == null || nums.length == 0)
+            return;
+        int n = nums.length;
+        int i = 0;
+        int j = i + 1;
+        while(j < n) {
+            if (nums[i] == 0 && nums[j] != 0) {
+                swap(nums, i, j);
+                i++;
+                j++;
+            } else if (nums[i] == 0 && nums[j] == 0) {
+                j++;
+            }  else {
+                i++;
+                j++;
+            }
+        }
     }
 }
 
