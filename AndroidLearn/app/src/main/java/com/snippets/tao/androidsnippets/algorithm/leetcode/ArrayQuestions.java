@@ -1,5 +1,6 @@
 package com.snippets.tao.androidsnippets.algorithm.leetcode;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +63,136 @@ public class ArrayQuestions {
     }
 
     /**
-     * LeetCode 1089
+     *  LeetCode 485
+     *
+     * Given a binary array nums, return the maximum number of consecutive 1's in the array.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [1,1,0,1,1,1]
+     * Output: 3
+     * Explanation: The first two digits or the last three digits are consecutive 1s. The maximum number of consecutive 1s is 3.
+     * Example 2:
+     *
+     * Input: nums = [1,0,1,1,0,1]
+     * Output: 2
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= nums.length <= 105
+     * nums[i] is either 0 or 1.
+     *
+     *
+     *
+     */
+    public static int findMaxConsecutiveOnes(int[] nums) {
+        int count = 0;
+        int max = 0;
+        for(int i = 0; i < nums.length; i++) {
+            if(nums[i] == 1) {
+                ++count;
+                max = Math.max(count, max);
+            } else {
+                count = 0;
+            }
+        }
+        return max;
+    }
+
+    /** LeetCode 977. Squares of a Sorted Array
+     *
+     * Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [-4,-1,0,3,10]
+     * Output: [0,1,9,16,100]
+     * Explanation: After squaring, the array becomes [16,1,0,9,100].
+     * After sorting, it becomes [0,1,9,16,100].
+     * Example 2:
+     *
+     * Input: nums = [-7,-3,2,3,11]
+     * Output: [4,9,9,49,121]
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= nums.length <= 104
+     * -104 <= nums[i] <= 104
+     * nums is sorted in non-decreasing order.
+     *
+     *
+     * Follow up: Squaring each element and sorting the new array is very trivial, could you find an O(n) solution using a different approach?
+     *
+     *
+     */
+
+    public static int[] sortedSquares(int[] nums) {
+        int n = nums.length;
+        for(int i = 0; i < n; i++) {
+            nums[i] = Math.abs(nums[i]);
+        }
+
+        Arrays.sort(nums);
+        for(int i = 0; i < n; i++) {
+            nums[i] = nums[i] * nums[i];
+        }
+        return nums;
+    }
+
+    /**
+     * LeetCode 1295. Find Numbers with Even Number of Digits
+     *
+     * Given an array nums of integers, return how many of them contain an even number of digits.
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [12,345,2,6,7896]
+     * Output: 2
+     * Explanation:
+     * 12 contains 2 digits (even number of digits).
+     * 345 contains 3 digits (odd number of digits).
+     * 2 contains 1 digit (odd number of digits).
+     * 6 contains 1 digit (odd number of digits).
+     * 7896 contains 4 digits (even number of digits).
+     * Therefore only 12 and 7896 contain an even number of digits.
+     * Example 2:
+     *
+     * Input: nums = [555,901,482,1771]
+     * Output: 1
+     * Explanation:
+     * Only 1771 contains an even number of digits.
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= nums.length <= 500
+     * 1 <= nums[i] <= 10^5
+     *
+     */
+
+    public static int findNumbers(int[] nums) {
+        if(nums == null || nums.length == 0)
+            return 0;
+        int count = 0;
+        for(int i = 0; i<nums.length; i++) {
+            if(nums[i] > 9 && nums[i] <100
+                    || nums[i] > 999 && nums[i] < 10000
+                    || nums[i] > 99999 && nums[i] < 1000000) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * LeetCode 1089. Duplicate Zeros
      *
      * Given a fixed length array arr of integers, duplicate each occurrence of zero,
      * shifting the remaining elements to the right.
@@ -177,6 +307,8 @@ public class ArrayQuestions {
     }
 
     /**
+     * LeetCode 27
+     *
      * Given an array nums and a value val, remove all instances of that value in-place and return the new length.
      *
      * Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
@@ -250,6 +382,8 @@ public class ArrayQuestions {
     }
 
     /**
+     * LeetCode 26
+     *
      * Given a sorted array nums, remove the duplicates in-place such that each element appears only once and returns the new length.
      *
      * Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
@@ -310,6 +444,9 @@ public class ArrayQuestions {
 
 
     /**
+     *
+     * LeetCode 1346. Check If N and Its Double Exist
+     *
      * Given an array arr of integers, check if there exists two integers N and M such that N is the double of
      * M ( i.e. N = 2 * M).
      *
@@ -372,6 +509,8 @@ public class ArrayQuestions {
     }
 
     /**
+     * LeetCode 941
+     *
      * Given an array of integers arr, return true if and only if it is a valid mountain array.
      *
      * Recall that arr is a mountain array if and only if:
@@ -439,6 +578,7 @@ public class ArrayQuestions {
     }
 
     /**
+     * LeetCode 1299. Replace Elements with Greatest Element on Right Side
      *
      * Given an array arr, replace every element in that array with the greatest element among the elements to its right,
      * and replace the last element with -1.
@@ -493,6 +633,38 @@ public class ArrayQuestions {
             }
         }
         return arr;
+    }
+
+    /**
+     *
+     * Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+     *
+     * Note that you must do this in-place without making a copy of the array.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [0,1,0,3,12]
+     * Output: [1,3,12,0,0]
+     * Example 2:
+     *
+     * Input: nums = [0]
+     * Output: [0]
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= nums.length <= 104
+     * -231 <= nums[i] <= 231 - 1
+     *
+     *
+     * Follow up: Could you minimize the total number of operations done?
+     *
+     *
+     */
+    public static void moveZeroes(int[] nums) {
+
     }
 }
 
