@@ -43,7 +43,8 @@ public class ArrayQuestions {
         //int[] nums = new int[] {0,0,1,1,1,2,2,3,3,4};
         //int[] nums = new int[] {3,1,7,11};
         //int[] nums = new int[] {-2,0,10,-19,4,6,-8};
-        int[] nums = new int[] {0, 0};
+        //int[] nums = new int[] {0, 0};
+        int[] nums = new int[] {2,1,2,3,5,7,9,10,12,14,15,16,18,14,13};
 
         System.out.println("before:");
         printArray(nums);
@@ -51,8 +52,9 @@ public class ArrayQuestions {
         //merge(nums1, 1, nums2, 1);
         //int length = removeElement(nums, 3);
         //int length = removeDuplicates(nums);
-        boolean exists = checkIfExist(nums);
-        System.out.println("exists:" + exists);
+        //boolean exists = checkIfExist(nums);
+        boolean valid = validMountainArray(nums);
+        System.out.println("valid:" + valid);
 
         //System.out.println("after:");
         //printArray(nums);
@@ -369,4 +371,152 @@ public class ArrayQuestions {
         return false;
     }
 
+    /**
+     * Given an array of integers arr, return true if and only if it is a valid mountain array.
+     *
+     * Recall that arr is a mountain array if and only if:
+     *
+     * arr.length >= 3
+     * There exists some i with 0 < i < arr.length - 1 such that:
+     * arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
+     * arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: arr = [2,1]
+     * Output: false
+     *
+     * Example 2:
+     *
+     * Input: arr = [3,5,5]
+     * Output: false
+     *
+     * Example 3:
+     *
+     * Input: arr = [0,3,2,1]
+     * Output: true
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= arr.length <= 104
+     * 0 <= arr[i] <= 104
+     *
+     */
+
+    public static boolean validMountainArray(int[] arr) {
+        int n = arr.length;
+        if (n < 3)
+            return false;
+
+        int maxIndex = 0;
+        int max = Integer.MIN_VALUE;
+        for(int i = 0; i < n; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+                maxIndex = i;
+            }
+        }
+
+        if (maxIndex == 0 || maxIndex == n-1)
+            return false;
+
+        for (int i = maxIndex; i > 0; i--) {
+            if (arr[i] <= arr[i - 1]) {
+                return false;
+            }
+        }
+
+        for (int i = maxIndex; i < n - 1; i++) {
+            if (arr[i] <= arr[i + 1]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     *
+     * Given an array arr, replace every element in that array with the greatest element among the elements to its right,
+     * and replace the last element with -1.
+     *
+     * After doing so, return the array.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: arr = [17,18,5,4,6,1]
+     * Output: [18,6,6,6,1,-1]
+     * Explanation:
+     * - index 0 --> the greatest element to the right of index 0 is index 1 (18).
+     * - index 1 --> the greatest element to the right of index 1 is index 4 (6).
+     * - index 2 --> the greatest element to the right of index 2 is index 4 (6).
+     * - index 3 --> the greatest element to the right of index 3 is index 4 (6).
+     * - index 4 --> the greatest element to the right of index 4 is index 5 (1).
+     * - index 5 --> there are no elements to the right of index 5, so we put -1.
+     * Example 2:
+     *
+     * Input: arr = [400]
+     * Output: [-1]
+     * Explanation: There are no elements to the right of index 0.
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= arr.length <= 104
+     * 1 <= arr[i] <= 105
+     *
+     *
+     */
+
+    public static int[] replaceElements(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 0; i < n; i++) {
+            int max = Integer.MIN_VALUE;
+            int maxIndex = i + 1;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] > max) {
+                    max = arr[j];
+                    maxIndex = j;
+                }
+            }
+
+            if (i == n -1) {
+                arr[i] = -1;
+            } else {
+                arr[i] = arr[maxIndex];
+            }
+        }
+        return arr;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
