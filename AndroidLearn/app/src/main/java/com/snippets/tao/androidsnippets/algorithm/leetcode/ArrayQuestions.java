@@ -1,8 +1,12 @@
 package com.snippets.tao.androidsnippets.algorithm.leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Tao He on 2021/5/31.
@@ -31,7 +35,7 @@ public class ArrayQuestions {
     }
 
     public static void test() {
-        int b[] = new int[] {1,0,2,3,0,4,5,0};
+        //int b[] = new int[] {1,0,2,3,0,4,5,0};
 
         //int[] nums1 = new int[] {1, 2, 3, 0, 0, 0};
         //int[] nums2 = new int[] {2, 5, 6};
@@ -46,7 +50,7 @@ public class ArrayQuestions {
         //int[] nums = new int[] {-2,0,10,-19,4,6,-8};
         //int[] nums = new int[] {0, 0};
         //int[] nums = new int[] {2,1,2,3,5,7,9,10,12,14,15,16,18,14,13};
-        int[] nums = new int[] {0,1,0,3,12};
+        int[] nums = new int[] {4,3,2,7,8,2,3,1};
 
         System.out.println("before:");
         printArray(nums);
@@ -57,11 +61,17 @@ public class ArrayQuestions {
         //boolean exists = checkIfExist(nums);
         //boolean valid = validMountainArray(nums);
         //System.out.println("valid:" + valid);
-        moveZeroes(nums);
+        //moveZeroes(nums);
+        //sortArrayByParity(nums);
+        //int count = heightChecker(nums);
+        //int thirdMax = thirdMax(nums);
+        List<Integer> l = findDisappearedNumbers(nums);
+        for (Integer i : l) {
+            System.out.println("disappeared:" + i);
+        }
 
         System.out.println("after:");
         printArray(nums);
-        //System.out.println("length:" + length);
     }
 
     /**
@@ -684,6 +694,236 @@ public class ArrayQuestions {
                 j++;
             }
         }
+    }
+
+    /**
+     *
+     * Given an array nums of non-negative integers, return an array consisting of all the even elements of nums,
+     * followed by all the odd elements of nums.
+     *
+     * You may return any answer array that satisfies this condition.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [3,1,2,4]
+     * Output: [2,4,3,1]
+     * The outputs [4,2,3,1], [2,4,1,3], and [4,2,1,3] would also be accepted.
+     *
+     *
+     * Note:
+     *
+     * 1 <= nums.length <= 5000
+     * 0 <= nums[i] <= 5000
+     *
+     */
+    public static int[] sortArrayByParity(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return nums;
+        int n = nums.length;
+        int i = 0;
+        int j = i + 1;
+        while(j < n) {
+            if (nums[i] % 2 != 0 && nums[j] % 2 == 0) {
+                swap(nums, i, j);
+                i++;
+                j++;
+            } else if (nums[i] % 2 != 0 && nums[j] % 2 != 0) {
+                j++;
+            }  else {
+                i++;
+                j++;
+            }
+        }
+        return nums;
+    }
+
+    /**
+     *
+     * A school is trying to take an annual photo of all the students. The students are asked to stand in a single
+     * file line in non-decreasing order by height. Let this ordering be represented by the integer array expected
+     * where expected[i] is the expected height of the ith student in line.
+     *
+     * You are given an integer array heights representing the current order that the students are standing in.
+     * Each heights[i] is the height of the ith student in line (0-indexed).
+     *
+     * Return the number of indices where heights[i] != expected[i].
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: heights = [1,1,4,2,1,3]
+     * Output: 3
+     * Explanation:
+     * heights:  [1,1,4,2,1,3]
+     * expected: [1,1,1,2,3,4]
+     * Indices 2, 4, and 5 do not match.
+     *
+     * Example 2:
+     *
+     * Input: heights = [5,1,2,3,4]
+     * Output: 5
+     * Explanation:
+     * heights:  [5,1,2,3,4]
+     * expected: [1,2,3,4,5]
+     * All indices do not match.
+     *
+     * Example 3:
+     *
+     * Input: heights = [1,2,3,4,5]
+     * Output: 0
+     * Explanation:
+     * heights:  [1,2,3,4,5]
+     * expected: [1,2,3,4,5]
+     * All indices match.
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= heights.length <= 100
+     * 1 <= heights[i] <= 100
+     *
+     *
+     *
+     */
+    public static int heightChecker(int[] heights) {
+        if (heights == null || heights.length == 0)
+            return 0;
+
+        int n = heights.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < n; i++) {
+            map.put(i, heights[i]);
+        }
+
+        int count = 0;
+        int[] newArray = Arrays.copyOf(heights, n);
+        Arrays.sort(newArray);
+        for(int i = 0; i < n; i++) {
+            if (map.get(i) != newArray[i])
+                count++;
+        }
+
+        return count;
+    }
+
+    /**
+     *
+     * Given integer array nums, return the third maximum number in this array. If the third maximum does not exist,
+     * return the maximum number.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [3,2,1]
+     * Output: 1
+     * Explanation: The third maximum is 1.
+     *
+     * Example 2:
+     *
+     * Input: nums = [1,2]
+     * Output: 2
+     * Explanation: The third maximum does not exist, so the maximum (2) is returned instead.
+     * Example 3:
+     *
+     * Input: nums = [2,2,3,1]
+     * Output: 1
+     * Explanation: Note that the third maximum here means the third maximum distinct number.
+     * Both numbers with value 2 are both considered as second maximum.
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= nums.length <= 104
+     * -231 <= nums[i] <= 231 - 1
+     *
+     *
+     * Follow up: Can you find an O(n) solution?
+     *
+     *
+     */
+
+    public static int thirdMax(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return 0;
+
+        int n = nums.length;
+
+        int[] newArray = Arrays.copyOf(nums, n);
+        Arrays.sort(newArray);
+
+        if(n < 3) {
+            return newArray[n - 1];
+        }
+
+        int ith = 1;
+        for(int i = n - 1; i > 0; i--) {
+            if (ith == 3) {
+                return newArray[i];
+            }
+
+            if (newArray[i] != newArray[i - 1]) {
+                ith++;
+            }
+
+            if(i - 1 == 0 && ith == 3) {
+                return newArray[i -1];
+            }
+        }
+
+        return newArray[n - 1];
+    }
+
+
+    /**
+     * Given an array nums of n integers where nums[i] is in the range [1, n], return an array of all the
+     * integers in the range [1, n] that do not appear in nums.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [4,3,2,7,8,2,3,1]
+     * Output: [5,6]
+     * Example 2:
+     *
+     * Input: nums = [1,1]
+     * Output: [2]
+     *
+     *
+     * Constraints:
+     *
+     * n == nums.length
+     * 1 <= n <= 105
+     * 1 <= nums[i] <= n
+     *
+     *
+     * Follow up: Could you do it without extra space and in O(n) runtime? You may assume the returned list does not
+     * count as extra space.
+     *
+     *
+     */
+    public static List<Integer> findDisappearedNumbers(int[] nums) {
+        if(nums == null || nums.length == 0)
+            return new ArrayList<>();
+
+        int n = nums.length;
+        Set<Integer> set = new HashSet<>();
+        for(int i = 0; i < n; i++) {
+            set.add(nums[i]);
+        }
+
+        List<Integer> l = new ArrayList<>();
+        for(int i = 1; i <=n; i++) {
+            if (!set.contains(i)) {
+                l.add(i);
+            }
+        }
+
+        return l;
     }
 }
 
