@@ -33,12 +33,14 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.snippets.tao.androidsnippets.algorithm.ctci.ArrayStringImpl;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.ArrayQuestions;
+import com.snippets.tao.androidsnippets.algorithm.leetcode.LinkedListQuestions;
 import com.snippets.tao.androidsnippets.demo.AgorithmImpl;
 import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.CameraActivity;
 import com.snippets.tao.androidsnippets.source.opengl.AirHockeyActivity;
 import com.snippets.tao.androidsnippets.utils.PermissionConstant;
 import com.snippets.tao.androidsnippets.utils.ScreenshotManager;
 
+import java.util.LinkedList;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -157,7 +159,8 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         //ThreadLocalDemo.test();
         //AgorithmImpl.test();
         //ArrayStringImpl.test();
-        ArrayQuestions.test();
+        //ArrayQuestions.test();
+        LinkedListQuestions.test();
 
         /*
         try {
