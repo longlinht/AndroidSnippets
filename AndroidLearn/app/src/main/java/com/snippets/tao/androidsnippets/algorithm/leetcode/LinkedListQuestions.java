@@ -599,9 +599,178 @@ public class LinkedListQuestions {
      * Follow up: Could you do it in O(n) time and O(1) space?
      *
      */
-    public boolean isPalindrome(ListNode head) {
-        return false;
 
+    public boolean isPalindrome(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        if (fast != null) { // odd nodes: let right half smaller
+            slow = slow.next;
+        }
+        slow = reverse(slow);
+        fast = head;
+
+        while (slow != null) {
+            if (fast.val != slow.val) {
+                return false;
+            }
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return true;
     }
 
+    public ListNode reverse(ListNode head) {
+        ListNode prev = null;
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+
+
+    /**
+     * Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together
+     * the nodes of the first two lists.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: l1 = [1,2,4], l2 = [1,3,4]
+     * Output: [1,1,2,3,4,4]
+     * Example 2:
+     *
+     * Input: l1 = [], l2 = []
+     * Output: []
+     * Example 3:
+     *
+     * Input: l1 = [], l2 = [0]
+     * Output: [0]
+     *
+     *
+     * Constraints:
+     *
+     * The number of nodes in both lists is in the range [0, 50].
+     * -100 <= Node.val <= 100
+     * Both l1 and l2 are sorted in non-decreasing order.
+     *
+     *
+     */
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1 == null) return l2;
+        if(l2 == null) return l1;
+        if(l1.val < l2.val){
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        } else{
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        }
+    }
+
+
+    /**
+     *
+     * You are given two non-empty linked lists representing two non-negative integers.
+     * The digits are stored in reverse order, and each of their nodes contains a single digit.
+     * Add the two numbers and return the sum as a linked list.
+     *
+     * You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: l1 = [2,4,3], l2 = [5,6,4]
+     * Output: [7,0,8]
+     * Explanation: 342 + 465 = 807.
+     * Example 2:
+     *
+     * Input: l1 = [0], l2 = [0]
+     * Output: [0]
+     * Example 3:
+     *
+     * Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+     * Output: [8,9,9,9,0,0,0,1]
+     *
+     *
+     * Constraints:
+     *
+     * The number of nodes in each linked list is in the range [1, 100].
+     * 0 <= Node.val <= 9
+     * It is guaranteed that the list represents a number that does not have leading zeros.
+     *
+     *
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+
+        boolean incre = false;
+        ListNode newHead = null;
+        ListNode cur = null;
+        while(l1 != null && l2 != null) {
+            int sum = l1.val + l2.val + (incre ? 1 : 0);
+            if (sum > 9) {
+                incre = true;
+            } else {
+                incre = false;
+            }
+
+            ListNode node = new ListNode(sum % 10);
+            if (newHead == null) {
+                newHead = node;
+                cur = node;
+            } else {
+                cur.next = node;
+                cur = cur.next;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+
+        while (l1 != null) {
+            int sum = l1.val + (incre ? 1 : 0);
+            if (sum > 9) {
+                incre = true;
+            } else {
+                incre = false;
+            }
+
+            ListNode node = new ListNode(sum % 10);
+            cur.next = node;
+            cur = cur.next;
+            l1 = l1.next;
+        }
+
+        while (l2 != null) {
+            int sum = l2.val + (incre ? 1 : 0);
+            if (sum > 9) {
+                incre = true;
+            } else {
+                incre = false;
+            }
+
+            ListNode node = new ListNode(sum % 10);
+            cur.next = node;
+            cur = cur.next;
+            l2 = l2.next;
+        }
+
+        if (incre) {
+            ListNode node = new ListNode(1);
+            cur.next = node;
+            cur = cur.next;
+        }
+        return newHead;
+    }
 }
