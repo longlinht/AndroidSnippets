@@ -427,4 +427,181 @@ public class LinkedListQuestions {
         return curA;
     }
 
+    /**
+     * LeetCode 206. Reverse Linked List
+     *
+     * Given the head of a singly linked list, reverse the list, and return the reversed list.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: head = [1,2,3,4,5]
+     * Output: [5,4,3,2,1]
+     * Example 2:
+     *
+     *
+     * Input: head = [1,2]
+     * Output: [2,1]
+     * Example 3:
+     *
+     * Input: head = []
+     * Output: []
+     *
+     *
+     * Constraints:
+     *
+     * The number of nodes in the list is the range [0, 5000].
+     * -5000 <= Node.val <= 5000
+     *
+     *
+     * Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
+     *
+     *
+     */
+
+    // Iterative version;
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode nextTemp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextTemp;
+        }
+        return prev;
+    }
+
+    // Recursive Version
+    public ListNode reverseListRecursive(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode p = reverseListRecursive(head.next);
+        head.next.next = head;
+        head.next = null;
+        return p;
+    }
+
+    /**
+     *
+     * Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val,
+     * and return the new head.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: head = [1,2,6,3,4,5,6], val = 6
+     * Output: [1,2,3,4,5]
+     * Example 2:
+     *
+     * Input: head = [], val = 1
+     * Output: []
+     * Example 3:
+     *
+     * Input: head = [7,7,7,7], val = 7
+     * Output: []
+     *
+     *
+     * Constraints:
+     *
+     * The number of nodes in the list is in the range [0, 104].
+     * 1 <= Node.val <= 50
+     * 0 <= k <= 50
+     *
+     *
+     *
+     */
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null) return null;
+        head.next = removeElements(head.next, val);
+        return head.val == val ? head.next : head;
+    }
+
+    /**
+     *
+     * Given the head of a singly linked list, group all the nodes with odd indices together followed by
+     * the nodes with even indices, and return the reordered list.
+     *
+     * The first node is considered odd, and the second node is even, and so on.
+     *
+     * Note that the relative order inside both the even and odd groups should remain as it was in the input.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: head = [1,2,3,4,5]
+     * Output: [1,3,5,2,4]
+     * Example 2:
+     *
+     *
+     * Input: head = [2,1,3,5,6,4,7]
+     * Output: [2,3,6,7,1,5,4]
+     *
+     *
+     * Constraints:
+     *
+     * The number of nodes in the linked list is in the range [0, 104].
+     * -106 <= Node.val <= 106
+     *
+     *
+     * Follow up: Could you solve it in O(1) space complexity and O(nodes) time complexity?
+     *
+     *
+     *
+     */
+
+    public ListNode oddEvenList(ListNode head) {
+
+        if (head != null) {
+
+            ListNode odd = head, even = head.next, evenHead = even;
+
+            while (even != null && even.next != null) {
+                odd.next = odd.next.next;
+                even.next = even.next.next;
+                odd = odd.next;
+                even = even.next;
+            }
+            odd.next = evenHead;
+        }
+        return head;
+    }
+
+
+    /**
+     * Given the head of a singly linked list, return true if it is a palindrome.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: head = [1,2,2,1]
+     * Output: true
+     * Example 2:
+     *
+     *
+     * Input: head = [1,2]
+     * Output: false
+     *
+     *
+     * Constraints:
+     *
+     * The number of nodes in the list is in the range [1, 105].
+     * 0 <= Node.val <= 9
+     *
+     *
+     * Follow up: Could you do it in O(n) time and O(1) space?
+     *
+     */
+    public boolean isPalindrome(ListNode head) {
+        return false;
+
+    }
+
 }
