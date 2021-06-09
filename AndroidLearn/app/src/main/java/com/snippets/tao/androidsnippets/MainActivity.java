@@ -33,6 +33,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.snippets.tao.androidsnippets.algorithm.ctci.ArrayStringImpl;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.ArrayQuestions;
+import com.snippets.tao.androidsnippets.algorithm.leetcode.BinaryTreeQuestions;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.LinkedListQuestions;
 import com.snippets.tao.androidsnippets.demo.AgorithmImpl;
 import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.CameraActivity;
@@ -160,7 +161,8 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         //AgorithmImpl.test();
         //ArrayStringImpl.test();
         //ArrayQuestions.test();
-        LinkedListQuestions.test();
+        //LinkedListQuestions.test();
+        new BinaryTreeQuestions().test();
 
         /*
         try {
