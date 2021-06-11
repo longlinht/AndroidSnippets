@@ -53,6 +53,25 @@ public class QueueStackQuestions {
                 { 1, 0, 1, 0, 1 } };
 
         System.out.println("count: " + numIslands(mx));
+
+
+
+        String[] deadends = {"0201","0101","0102","1212","2002"};
+        String target = "0202";
+
+        String ss = "0000";
+        char[] chars = ss.toCharArray();
+
+        int i = '0';
+        System.out.println("0 int value=" + i);
+
+        int val = (chars[0] - 1 + 10 - '0') % 10;
+        System.out.println("val=" + val);
+
+        chars[0] = (char)((chars[0] + 8 - '0') % 10 + '0');
+        System.out.println(chars);
+
+        System.out.println("open lock need: " + openLock(deadends, target));;
     }
 
 
@@ -430,6 +449,52 @@ public class QueueStackQuestions {
      *
      *
      */
+    public int openLock(String[] deadends, String target) {
+        Set<String> deadSet = new HashSet<>(Arrays.asList(deadends));
+        if (deadSet.contains(target) || deadSet.contains("0000")) {
+            return -1;
+        }
+
+        Queue<String> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        queue.offer("0000");
+        visited.add("0000");
+        int step = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                String curr = queue.poll();
+                if (curr.equals(target)) {
+                    return step;
+                }
+                for (int pos = 0; pos < 4; pos++) {
+                    char[] chars = curr.toCharArray();
+                    // (chars[pos] + 1 + 10 - '0') % 10 = (chars[pos] + 11 - '0') % 10
+                    chars[pos] = (char)((chars[pos] + 11 - '0') % 10 + '0');
+                    String nextString = String.valueOf(chars);
+                    System.out.println("nextString: " + nextString);
+                    if (!visited.contains(nextString) && !deadSet.contains(nextString)) {
+                        queue.offer(nextString);
+                        visited.add(nextString);
+                    }
+                    // (chars[pos] - 2 + 10 - '0') % 10 = (chars[pos] + 8 - '0') % 10
+                    chars[pos] = (char)((chars[pos] + 8 - '0') % 10 + '0');
+                    nextString = String.valueOf(chars);
+                    System.out.println("nextString: " + nextString);
+                    if (!visited.contains(nextString) && !deadSet.contains(nextString)) {
+                        queue.offer(nextString);
+                        visited.add(nextString);
+                    }
+                }
+            }
+            step++;
+        }
+
+        return -1;
+    }
+
+
+    /*
     private static List<String> getSuccessors(String str) {
         List<String> res = new LinkedList<>();
         for (int i = 0; i < str.length(); i++) {
@@ -459,6 +524,7 @@ public class QueueStackQuestions {
         }
         return -1;
     }
+     */
 
 
 }
