@@ -1,5 +1,6 @@
 package com.snippets.tao.androidsnippets.algorithm.leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -65,13 +66,14 @@ public class QueueStackQuestions {
         int i = '0';
         System.out.println("0 int value=" + i);
 
-        int val = (chars[0] - 1 + 10 - '0') % 10;
+        int val = (chars[0] - 1 - '0') % 10;
         System.out.println("val=" + val);
 
-        chars[0] = (char)((chars[0] + 8 - '0') % 10 + '0');
+        chars[0] = (char)((chars[0] - 1 - '0') % 10 + '0');
         System.out.println(chars);
 
-        System.out.println("open lock need: " + openLock(deadends, target));;
+        //System.out.println("open lock need: " + openLock(deadends, target));;
+        System.out.println("Num of squares: " + numSquares(12));
     }
 
 
@@ -526,5 +528,154 @@ public class QueueStackQuestions {
     }
      */
 
+    /**
+     *
+     * Perfect Squares
+     *
+     * Given an integer n, return the least number of perfect square numbers that sum to n.
+     *
+     * A perfect square is an integer that is the square of an integer; in other words,
+     * it is the product of some integer with itself. For example, 1, 4, 9, and 16 are perfect
+     * squares while 3 and 11 are not.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: n = 12
+     * Output: 3
+     * Explanation: 12 = 4 + 4 + 4.
+     * Example 2:
+     *
+     * Input: n = 13
+     * Output: 2
+     * Explanation: 13 = 4 + 9.
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= n <= 104
+     *
+     */
+    public int numSquares(int n) {
+
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+
+        if (n > 0) {
+            queue.offer(n);
+        }
+
+        int level = 0;
+        while(!queue.isEmpty()) {
+            level++;
+
+            int size = queue.size();
+            for(int i = 0; i < size; i++) {
+                int val = queue.poll();
+                if (visited.contains(val))
+                    continue;
+
+                for (int j = 1; j <= Math.sqrt(val); j++) {
+                    if (val - (j * j) == 0) return level;
+                    queue.offer(val - (j*j));
+                }
+            }
+        }
+        return level;
+    }
+
+
+    /**
+     * Min Stack
+     *
+     * Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+     *
+     * Implement the MinStack class:
+     *
+     * MinStack() initializes the stack object.
+     * void push(val) pushes the element val onto the stack.
+     * void pop() removes the element on the top of the stack.
+     * int top() gets the top element of the stack.
+     * int getMin() retrieves the minimum element in the stack.
+     *
+     *
+     * Example 1:
+     *
+     * Input
+     * ["MinStack","push","push","push","getMin","pop","top","getMin"]
+     * [[],[-2],[0],[-3],[],[],[],[]]
+     *
+     * Output
+     * [null,null,null,null,-3,null,0,-2]
+     *
+     * Explanation
+     * MinStack minStack = new MinStack();
+     * minStack.push(-2);
+     * minStack.push(0);
+     * minStack.push(-3);
+     * minStack.getMin(); // return -3
+     * minStack.pop();
+     * minStack.top();    // return 0
+     * minStack.getMin(); // return -2
+     *
+     *
+     * Constraints:
+     *
+     * -231 <= val <= 231 - 1
+     * Methods pop, top and getMin operations will always be called on non-empty stacks.
+     * At most 3 * 104 calls will be made to push, pop, top, and getMin.
+     *
+     */
+    class MinStack {
+
+        private Node head;
+
+        /** initialize your data structure here. */
+        public MinStack() {
+
+        }
+
+        public void push(int val) {
+            if (head == null) {
+                head = new Node(val, val, null);
+            } else {
+                head = new Node(val, Math.min(val, head.min), head);
+            }
+        }
+
+        public void pop() {
+            head = head.next;
+        }
+
+        public int top() {
+            return head.val;
+        }
+
+        public int getMin() {
+            return head.min;
+        }
+
+        class Node {
+            public int val;
+            public int min;
+            public Node next;
+
+            public Node(int v, int m, Node n) {
+                val = v;
+                min = m;
+                next = n;
+            }
+        }
+    }
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
 
 }
