@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * Created by Tao He on 2021/6/9.
@@ -74,6 +75,8 @@ public class QueueStackQuestions {
 
         //System.out.println("open lock need: " + openLock(deadends, target));;
         System.out.println("Num of squares: " + numSquares(12));
+
+        System.out.println("is valid: " + isValid("}"));
     }
 
 
@@ -669,13 +672,137 @@ public class QueueStackQuestions {
         }
     }
 
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack obj = new MinStack();
- * obj.push(val);
- * obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.getMin();
- */
 
+    /**
+     *
+     * Valid Parentheses
+     *
+     * Given a string s containing just the characters '(', ')', '{', '}', '[' and ']',
+     * determine if the input string is valid.
+     *
+     * An input string is valid if:
+     *
+     * Open brackets must be closed by the same type of brackets.
+     * Open brackets must be closed in the correct order.
+     *
+     *
+     * Example 1:
+     *
+     * Input: s = "()"
+     * Output: true
+     * Example 2:
+     *
+     * Input: s = "()[]{}"
+     * Output: true
+     * Example 3:
+     *
+     * Input: s = "(]"
+     * Output: false
+     * Example 4:
+     *
+     * Input: s = "([)]"
+     * Output: false
+     * Example 5:
+     *
+     * Input: s = "{[]}"
+     * Output: true
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= s.length <= 104
+     * s consists of parentheses only '()[]{}'.
+     *
+     *
+     *
+     */
+    public boolean isValid(String s) {
+
+        if (s == null || s.length() == 0)
+            return false;
+
+        Stack<Character> stack = new Stack<>();
+
+        char[] chars = s.toCharArray();
+        for (char c : chars) {
+            switch (c) {
+                case '(' :
+                case '[':
+                case '{':
+                    stack.push(c);
+                    break;
+                case ')':
+                   if (!stack.isEmpty() && stack.peek() == '(') {
+                       stack.pop();
+                   } else {
+                       return false;
+                   }
+                   break;
+                case ']':
+                    if (!stack.isEmpty() && stack.peek() == '[') {
+                        stack.pop();
+                    } else {
+                        return false;
+                    }
+                    break;
+                case '}':
+                    if (!stack.isEmpty() && stack.peek() == '{') {
+                        stack.pop();
+                    } else {
+                        return false;
+                    }
+                    break;
+            }
+        }
+
+        return stack.isEmpty();
+    }
+
+    /**
+     *
+     * Daily Temperatures
+     * Given an array of integers temperatures represents the daily temperatures,
+     * return an array answer such that answer[i] is the number of days you have to wait
+     * after the ith day to get a warmer temperature. If there is no future day for which this is possible,
+     * keep answer[i] == 0 instead.
+     *
+     *
+     * Example 1:
+     *
+     * Input: temperatures = [73,74,75,71,69,72,76,73]
+     * Output: [1,1,4,2,1,1,0,0]
+     * Example 2:
+     *
+     * Input: temperatures = [30,40,50,60]
+     * Output: [1,1,1,0]
+     * Example 3:
+     *
+     * Input: temperatures = [30,60,90]
+     * Output: [1,1,0]
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= temperatures.length <= 105
+     * 30 <= temperatures[i] <= 100
+     *
+     *
+     *
+     */
+    public int[] dailyTemperatures(int[] temperatures) {
+        if(temperatures == null || temperatures.length == 0)
+            return null;
+
+        int n = temperatures.length;
+        int[] result = new int[n];
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (temperatures[i] < temperatures[j]) {
+                    result[i] = j - i;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 }
