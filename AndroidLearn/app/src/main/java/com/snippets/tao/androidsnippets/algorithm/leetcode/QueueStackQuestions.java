@@ -2,9 +2,12 @@ package com.snippets.tao.androidsnippets.algorithm.leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -880,4 +883,551 @@ public class QueueStackQuestions {
         }
         return stack.pop();
     }
+
+    /**
+     * Clone Graph
+     *
+     * Given a reference of a node in a connected undirected graph.
+     *
+     * Return a deep copy (clone) of the graph.
+     *
+     * Each node in the graph contains a value (int) and a list (List[Node]) of its neighbors.
+     *
+     * class Node {
+     *     public int val;
+     *     public List<Node> neighbors;
+     * }
+     *
+     *
+     * Test case format:
+     *
+     * For simplicity, each node's value is the same as the node's index (1-indexed). For example,
+     * the first node with val == 1,
+     * the second node with val == 2, and so on. The graph is represented in the test case using an adjacency list.
+     *
+     * An adjacency list is a collection of unordered lists used to represent a finite graph.
+     * Each list describes the set of neighbors of a node in the graph.
+     *
+     * The given node will always be the first node with val = 1.
+     * You must return the copy of the given node as a reference to the cloned graph.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: adjList = [[2,4],[1,3],[2,4],[1,3]]
+     * Output: [[2,4],[1,3],[2,4],[1,3]]
+     * Explanation: There are 4 nodes in the graph.
+     * 1st node (val = 1)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).
+     * 2nd node (val = 2)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).
+     * 3rd node (val = 3)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).
+     * 4th node (val = 4)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).
+     *
+     * Example 2:
+     *
+     * Input: adjList = [[]]
+     * Output: [[]]
+     * Explanation: Note that the input contains one empty list. The graph consists of only one node with val = 1 and it does not have any neighbors.
+     *
+     * Example 3:
+     *
+     * Input: adjList = []
+     * Output: []
+     * Explanation: This an empty graph, it does not have any nodes.
+     *
+     * Example 4:
+     *
+     * Input: adjList = [[2],[1]]
+     * Output: [[2],[1]]
+     *
+     *
+     * Constraints:
+     *
+     * The number of nodes in the graph is in the range [0, 100].
+     * 1 <= Node.val <= 100
+     * Node.val is unique for each node.
+     * There are no repeated edges and no self-loops in the graph.
+     * The Graph is connected and all nodes can be visited starting from the given node.
+     *
+     */
+
+    // Definition for a Node.
+    class Node {
+        public int val;
+        public List<Node> neighbors;
+        public Node() {
+            val = 0;
+            neighbors = new ArrayList<Node>();
+        }
+        public Node(int _val) {
+            val = _val;
+            neighbors = new ArrayList<Node>();
+        }
+        public Node(int _val, ArrayList<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
+
+    private Map<Integer, Node> map = new HashMap<>();
+    public Node cloneGraph(Node node) {
+        return clone(node);
+    }
+
+    public Node clone(Node node) {
+        if (node == null)
+            return node;
+
+        if (map.get(node.val) != null) {
+            return map.get(node.val);
+        }
+
+        Node newNode = new Node(node.val);
+        map.put(node.val, newNode);
+
+        List<Node> neighbors = node.neighbors;
+        for (Node n : neighbors) {
+            newNode.neighbors.add(clone(n));
+        }
+        return newNode;
+    }
+
+
+    /**
+     *
+     * Target Sum
+     *
+     * You are given an integer array nums and an integer target.
+     *
+     * You want to build an expression out of nums by adding one of the symbols '+' and '-' before each
+     * integer in nums and then concatenate all the integers.
+     *
+     * For example, if nums = [2, 1], you can add a '+' before 2 and a '-' before 1 and concatenate them
+     * to build the expression "+2-1".
+     * Return the number of different expressions that you can build, which evaluates to target.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [1,1,1,1,1], target = 3
+     * Output: 5
+     * Explanation: There are 5 ways to assign symbols to make the sum of nums be target 3.
+     * -1 + 1 + 1 + 1 + 1 = 3
+     * +1 - 1 + 1 + 1 + 1 = 3
+     * +1 + 1 - 1 + 1 + 1 = 3
+     * +1 + 1 + 1 - 1 + 1 = 3
+     * +1 + 1 + 1 + 1 - 1 = 3
+     * Example 2:
+     *
+     * Input: nums = [1], target = 1
+     * Output: 1
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= nums.length <= 20
+     * 0 <= nums[i] <= 1000
+     * 0 <= sum(nums[i]) <= 1000
+     * -1000 <= target <= 1000
+     *
+     *
+     */
+
+    int result = 0;
+
+    public int findTargetSumWays(int[] nums, int S) {
+        if(nums == null || nums.length == 0) return result;
+
+        int n = nums.length;
+        int[] sums = new int[n];
+        sums[n - 1] = nums[n - 1];
+        for (int i = n - 2; i >= 0; i--)
+            sums[i] = sums[i + 1] + nums[i];
+
+        helper(nums, sums, S, 0);
+        return result;
+    }
+    public void helper(int[] nums, int[] sums, int target, int pos){
+        if(pos == nums.length){
+            if(target == 0) result++;
+            return;
+        }
+
+        if (sums[pos] < Math.abs(target)) return;
+
+        helper(nums, sums, target + nums[pos], pos + 1);
+        helper(nums, sums, target - nums[pos], pos + 1);
+    }
+
+    /**
+     * Implement Queue using Stacks
+     *
+     * Implement a first in first out (FIFO) queue using only two stacks.
+     * The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).
+     *
+     * Implement the MyQueue class:
+     *
+     * void push(int x) Pushes element x to the back of the queue.
+     * int pop() Removes the element from the front of the queue and returns it.
+     * int peek() Returns the element at the front of the queue.
+     * boolean empty() Returns true if the queue is empty, false otherwise.
+     * Notes:
+     *
+     * You must use only standard operations of a stack, which means only push to top, peek/pop from top,
+     * size, and is empty operations are valid.
+     * Depending on your language, the stack may not be supported natively. You may simulate a stack using a
+     * list or deque (double-ended queue) as long as you use only a stack's standard operations.
+     * Follow-up: Can you implement the queue such that each operation is amortized O(1) time complexity?
+     * In other words, performing n operations will take overall O(n) time even if one of those operations
+     * may take longer.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input
+     * ["MyQueue", "push", "push", "peek", "pop", "empty"]
+     * [[], [1], [2], [], [], []]
+     * Output
+     * [null, null, null, 1, 1, false]
+     *
+     * Explanation
+     * MyQueue myQueue = new MyQueue();
+     * myQueue.push(1); // queue is: [1]
+     * myQueue.push(2); // queue is: [1, 2] (leftmost is front of the queue)
+     * myQueue.peek(); // return 1
+     * myQueue.pop(); // return 1, queue is [2]
+     * myQueue.empty(); // return false
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= x <= 9
+     * At most 100 calls will be made to push, pop, peek, and empty.
+     * All the calls to pop and peek are valid.
+     *
+     */
+    class MyQueue {
+
+        private Stack<Integer> queue;
+        /** Initialize your data structure here. */
+        public MyQueue() {
+            queue = new Stack<>();
+        }
+
+        /** Push element x to the back of queue. */
+        public void push(int x) {
+           Stack<Integer> temp = new Stack<>();
+           while(!queue.isEmpty()) {
+               temp.push(queue.pop());
+           }
+
+           queue.push(x);
+           while (!temp.isEmpty()) {
+               queue.push(temp.pop());
+           }
+        }
+
+        /** Removes the element from in front of queue and returns that element. */
+        public int pop() {
+            return queue.pop();
+        }
+
+        /** Get the front element. */
+        public int peek() {
+            return queue.peek();
+        }
+
+        /** Returns whether the queue is empty. */
+        public boolean empty() {
+            return queue.isEmpty();
+        }
+    }
+
+    /**
+     *
+     * Implement Stack using Queues
+     *
+     * Implement a last in first out (LIFO) stack using only two queues.
+     * The implemented stack should support all the functions of a normal queue (push, top, pop, and empty).
+     *
+     * Implement the MyStack class:
+     *
+     * void push(int x) Pushes element x to the top of the stack.
+     * int pop() Removes the element on the top of the stack and returns it.
+     * int top() Returns the element on the top of the stack.
+     * boolean empty() Returns true if the stack is empty, false otherwise.
+     * Notes:
+     *
+     * You must use only standard operations of a queue, which means only push to back, peek/pop from front,
+     * size, and is empty operations are valid.
+     * Depending on your language, the queue may not be supported natively.
+     * You may simulate a queue using a list or deque (double-ended queue),
+     * as long as you use only a queue's standard operations.
+     *
+     *
+     * Example 1:
+     *
+     * Input
+     * ["MyStack", "push", "push", "top", "pop", "empty"]
+     * [[], [1], [2], [], [], []]
+     * Output
+     * [null, null, null, 2, 2, false]
+     *
+     * Explanation
+     * MyStack myStack = new MyStack();
+     * myStack.push(1);
+     * myStack.push(2);
+     * myStack.top(); // return 2
+     * myStack.pop(); // return 2
+     * myStack.empty(); // return False
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= x <= 9
+     * At most 100 calls will be made to push, pop, top, and empty.
+     * All the calls to pop and top are valid.
+     *
+     *
+     * Follow-up: Can you implement the stack using only one queue?
+     *
+     *
+     *
+     */
+
+    class MyStack {
+
+        private Queue<Integer> stack;
+        /** Initialize your data structure here. */
+        public MyStack() {
+            stack = new LinkedList<>();
+        }
+
+        /** Push element x onto stack. */
+        public void push(int x) {
+            Queue<Integer> temp = new LinkedList<>();
+            while (!stack.isEmpty()) {
+                temp.offer(stack.poll());
+            }
+
+            stack.offer(x);
+            while (!temp.isEmpty()) {
+                stack.offer(temp.poll());
+            }
+        }
+
+        /** Removes the element on top of the stack and returns that element. */
+        public int pop() {
+            return stack.poll();
+        }
+
+        /** Get the top element. */
+        public int top() {
+            return stack.peek();
+        }
+
+        /** Returns whether the stack is empty. */
+        public boolean empty() {
+            return stack.isEmpty();
+        }
+    }
+
+    /**
+     * Decode String
+     *
+     * Given an encoded string, return its decoded string.
+     *
+     * The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being
+     * repeated exactly k times. Note that k is guaranteed to be a positive integer.
+     *
+     * You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed,
+     * etc.
+     *
+     * Furthermore, you may assume that the original data does not contain any digits and that digits are only for
+     * those repeat numbers, k. For example, there won't be input like 3a or 2[4].
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: s = "3[a]2[bc]"
+     * Output: "aaabcbc"
+     * Example 2:
+     *
+     * Input: s = "3[a2[c]]"
+     * Output: "accaccacc"
+     * Example 3:
+     *
+     * Input: s = "2[abc]3[cd]ef"
+     * Output: "abcabccdcdcdef"
+     * Example 4:
+     *
+     * Input: s = "abc3[cd]xyz"
+     * Output: "abccdcdcdxyz"
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= s.length <= 30
+     * s consists of lowercase English letters, digits, and square brackets '[]'.
+     * s is guaranteed to be a valid input.
+     * All the integers in s are in the range [1, 300].
+     *
+     *
+     */
+    public String decodeString(String s) {
+        Queue<Character> queue = new LinkedList<>();
+        for (char c : s.toCharArray()) queue.offer(c);
+        return helper(queue);
+    }
+
+    public String helper(Queue<Character> queue) {
+        StringBuilder sb = new StringBuilder();
+        int num = 0;
+        while (!queue.isEmpty()) {
+            char c= queue.poll();
+            if (Character.isDigit(c)) {
+                num = num * 10 + c - '0';
+            } else if (c == '[') {
+                String sub = helper(queue);
+                for (int i = 0; i < num; i++) sb.append(sub);
+                num = 0;
+            } else if (c == ']') {
+                break;
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+
+    public String decodeStringNonRecursive(String s) {
+        Stack<Integer> count = new Stack<>();
+        Stack<String> result = new Stack<>();
+        int i = 0;
+        result.push("");
+        while (i < s.length()) {
+            char ch = s.charAt(i);
+            if (ch >= '0' && ch <= '9') {
+                int start = i;
+                while (s.charAt(i + 1) >= '0' && s.charAt(i + 1) <= '9') i++;
+                count.push(Integer.parseInt(s.substring(start, i + 1)));
+            } else if (ch == '[') {
+                result.push("");
+            } else if (ch == ']') {
+                String str = result.pop();
+                StringBuilder sb = new StringBuilder();
+                int times = count.pop();
+                for (int j = 0; j < times; j += 1) {
+                    sb.append(str);
+                }
+                result.push(result.pop() + sb.toString());
+            } else {
+                result.push(result.pop() + ch);
+            }
+            i += 1;
+        }
+        return result.pop();
+    }
+
+    /**
+     * Flood Fill
+     *
+     * An image is represented by an m x n integer grid image where image[i][j] represents the
+     * pixel value of the image.
+     *
+     * You are also given three integers sr, sc, and newColor. You should perform a
+     * flood fill on the image starting from the pixel image[sr][sc].
+     *
+     * To perform a flood fill, consider the starting pixel, plus any pixels connected 4-directionally
+     * to the starting pixel of the same color as the starting pixel, plus any pixels connected
+     * 4-directionally to those pixels (also with the same color), and so on.
+     * Replace the color of all of the aforementioned pixels with newColor.
+     *
+     * Return the modified image after performing the flood fill.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2
+     * Output: [[2,2,2],[2,2,0],[2,0,1]]
+     * Explanation: From the center of the image with position (sr, sc) = (1, 1)
+     * (i.e., the red pixel), all pixels connected by a path of the same color as the starting pixel
+     * (i.e., the blue pixels) are colored with the new color.
+     * Note the bottom corner is not colored 2, because it is not 4-directionally connected to the
+     * starting pixel.
+     *
+     * Example 2:
+     *
+     * Input: image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, newColor = 2
+     * Output: [[2,2,2],[2,2,2]]
+     *
+     *
+     * Constraints:
+     *
+     * m == image.length
+     * n == image[i].length
+     * 1 <= m, n <= 50
+     * 0 <= image[i][j], newColor < 216
+     * 0 <= sr < m
+     * 0 <= sc < n
+     *
+     */
+
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if (image[sr][sc] == newColor) return image;
+        fill(image, sr, sc, image[sr][sc], newColor);
+        return image;
+    }
+
+    private void fill(int[][] image, int sr, int sc, int color, int newColor) {
+        if (sr < 0 || sr >= image.length || sc < 0 || sc >= image[0].length || image[sr][sc] != color) return;
+        image[sr][sc] = newColor;
+        fill(image, sr + 1, sc, color, newColor);
+        fill(image, sr - 1, sc, color, newColor);
+        fill(image, sr, sc + 1, color, newColor);
+        fill(image, sr, sc - 1, color, newColor);
+    }
+
+    /**
+     * 01 Matrix
+     *
+     * Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.
+     *
+     * The distance between two adjacent cells is 1.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: mat = [[0,0,0],[0,1,0],[0,0,0]]
+     * Output: [[0,0,0],[0,1,0],[0,0,0]]
+     * Example 2:
+     *
+     *
+     * Input: mat = [[0,0,0],[0,1,0],[1,1,1]]
+     * Output: [[0,0,0],[0,1,0],[1,2,1]]
+     *
+     *
+     * Constraints:
+     *
+     * m == mat.length
+     * n == mat[i].length
+     * 1 <= m, n <= 104
+     * 1 <= m * n <= 104
+     * mat[i][j] is either 0 or 1.
+     * There is at least one 0 in mat.
+     *
+     */
+    public int[][] updateMatrix(int[][] mat) {
+
+    }
+
 }
