@@ -12,7 +12,8 @@ import java.util.Map;
 public class RecursionQuestions {
 
     public void test() {
-        myPow(2, -2);
+        //myPow(2, -2);
+        generateTrees(3);
     }
 
     /**
@@ -338,5 +339,121 @@ public class RecursionQuestions {
         if (n > 0) return half * half * x;
 
         return half * half / x;
+    }
+
+
+    /**
+     *
+     * K-th Symbol in Grammar
+     * We build a table of n rows (1-indexed). We start by writing 0 in the 1st row. Now in every subsequent row,
+     * we look at the previous row and replace each occurrence of 0 with 01, and each occurrence of 1 with 10.
+     *
+     * For example, for n = 3, the 1st row is 0, the 2nd row is 01, and the 3rd row is 0110.
+     * Given two integer n and k, return the kth (1-indexed) symbol in the nth row of a table of n rows.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: n = 1, k = 1
+     * Output: 0
+     * Explanation: row 1: 0
+     * Example 2:
+     *
+     * Input: n = 2, k = 1
+     * Output: 0
+     * Explanation:
+     * row 1: 0
+     * row 2: 01
+     * Example 3:
+     *
+     * Input: n = 2, k = 2
+     * Output: 1
+     * Explanation:
+     * row 1: 0
+     * row 2: 01
+     * Example 4:
+     *
+     * Input: n = 3, k = 1
+     * Output: 0
+     * Explanation:
+     * row 1: 0
+     * row 2: 01
+     * row 3: 0110
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= n <= 30
+     * 1 <= k <= 2n - 1
+     *
+     *
+     */
+    public int kthGrammar(int n, int k) {
+        if( n == 1 )
+            return 0;
+        if(k % 2 == 0){
+            if (kthGrammar(n - 1,k / 2 )== 0)
+                return 1;
+            else
+                return 0;
+        } else{
+            if(kthGrammar(n - 1,(k + 1) / 2) == 0)
+                return 0;
+            else
+                return 1;
+        }
+    }
+
+    /**
+     *
+     * Unique Binary Search Trees II
+     *
+     * Given an integer n, return all the structurally unique BST's (binary search trees),
+     * which has exactly n nodes of unique values from 1 to n. Return the answer in any order.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: n = 3
+     * Output: [[1,null,2,null,3],[1,null,3,2],[2,1,3],[3,1,null,null,2],[3,2,null,1]]
+     * Example 2:
+     *
+     * Input: n = 1
+     * Output: [[1]]
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= n <= 8
+     *
+     *
+     */
+    public List<TreeNode> generateTrees(int n) {
+        List<TreeNode> list = genTreeList(1, n);
+        return list;
+    }
+
+    private List<TreeNode> genTreeList(int start, int end) {
+
+        List<TreeNode> list = new ArrayList<TreeNode>();
+        if (start > end) {
+            list.add(null);
+        }
+        for(int idx = start; idx <= end; idx++) {
+            List<TreeNode> leftList = genTreeList(start, idx - 1);
+            List<TreeNode> rightList = genTreeList(idx + 1, end);
+            for (TreeNode left : leftList) {
+                for(TreeNode right: rightList) {
+                    TreeNode root = new TreeNode(idx);
+                    root.left = left;
+                    root.right = right;
+                    list.add(root);
+                }
+            }
+        }
+        return list;
     }
 }
