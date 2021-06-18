@@ -36,6 +36,7 @@ import com.snippets.tao.androidsnippets.algorithm.leetcode.ArrayQuestions;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.BinaryTreeQuestions;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.LinkedListQuestions;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.QueueStackQuestions;
+import com.snippets.tao.androidsnippets.algorithm.leetcode.RecursionQuestions;
 import com.snippets.tao.androidsnippets.demo.AgorithmImpl;
 import com.snippets.tao.androidsnippets.source.audiovideo.chapter3.CameraActivity;
 import com.snippets.tao.androidsnippets.source.opengl.AirHockeyActivity;
@@ -164,7 +165,8 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         //ArrayStringImpl.test();
         //ArrayQuestions.test();
         //LinkedListQuestions.test();
-        new QueueStackQuestions().test();
+        //new QueueStackQuestions().test();
+        new RecursionQuestions().test();
 
         /*
         try {
