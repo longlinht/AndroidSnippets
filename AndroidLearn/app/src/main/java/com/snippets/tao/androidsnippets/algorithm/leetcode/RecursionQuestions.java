@@ -1,7 +1,10 @@
 package com.snippets.tao.androidsnippets.algorithm.leetcode;
 
+import com.snippets.tao.androidsnippets.logger.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +32,13 @@ public class RecursionQuestions {
                         {1,4},
                 };
 
-        searchMatrix(matrix2, 20);
+        //searchMatrix(matrix2, 20);
 
+        //solveNQ();
+        //int n = 15;
+        //System.out.println(n + " queens has " + totalNQueens(n) + " solutions");
+        //combine(4, 2);
+        generateParenthesis(3);
     }
 
     /**
@@ -634,4 +642,283 @@ public class RecursionQuestions {
         return false;
     }
 
+    /**
+     * N-Queens II
+     *
+     * The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that
+     * no two queens attack each other.
+     *
+     * Given an integer n, return the number of distinct solutions to the n-queens puzzle.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: n = 4
+     * Output: 2
+     * Explanation: There are two distinct solutions to the 4-queens puzzle as shown.
+     * Example 2:
+     *
+     * Input: n = 1
+     * Output: 1
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= n <= 9
+     *
+     *
+     */
+    public int totalNQueens(int n) {
+        if (n == 0)
+            return 0;
+        int[] q = new int[n];
+        return track(q, 0);
+    }
+
+    private int track(int[] q, int row) {
+        if (row == q.length)
+            return 1;
+        int solutions = 0;
+        for (int i = 0; i < q.length; i++) {
+            q[row] = i;
+            if (isValid(q, row, i)) {
+                solutions += track(q, row + 1);
+            }
+        }
+        return solutions;
+    }
+
+    private boolean isValid(int[] q, int row, int col) {
+        for (int i = 0; i < row; i++) {
+            if (q[i] == col || Math.abs(row - i) == Math.abs(col - q[i]))
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Sudoku Solver
+     *
+     * Write a program to solve a Sudoku puzzle by filling the empty cells.
+     *
+     * A sudoku solution must satisfy all of the following rules:
+     *
+     * Each of the digits 1-9 must occur exactly once in each row.
+     * Each of the digits 1-9 must occur exactly once in each column.
+     * Each of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.
+     * The '.' character indicates empty cells.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: board = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
+     * Output: [["5","3","4","6","7","8","9","1","2"],["6","7","2","1","9","5","3","4","8"],["1","9","8","3","4","2","5","6","7"],["8","5","9","7","6","1","4","2","3"],["4","2","6","8","5","3","7","9","1"],["7","1","3","9","2","4","8","5","6"],["9","6","1","5","3","7","2","8","4"],["2","8","7","4","1","9","6","3","5"],["3","4","5","2","8","6","1","7","9"]]
+     * Explanation: The input board is shown above and the only valid solution is shown below:
+     *
+     *
+     *
+     *
+     * Constraints:
+     *
+     * board.length == 9
+     * board[i].length == 9
+     * board[i][j] is a digit or '.'.
+     * It is guaranteed that the input board has only one solution.
+     *
+     *
+     *
+     */
+
+    public void solveSudoku(char[][] board) {
+        if(board == null || board.length == 0)
+            return;
+        solve(board);
+    }
+
+    public boolean solve(char[][] board){
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[0].length; j++){
+                if(board[i][j] == '.'){
+                    for(char c = '1'; c <= '9'; c++){//trial. Try 1 through 9
+                        if(isValid(board, i, j, c)){
+                            board[i][j] = c; //Put c for this cell
+
+                            if(solve(board))
+                                return true; //If it's the solution return true
+                            else
+                                board[i][j] = '.'; //Otherwise go back
+                        }
+                    }
+
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isValid(char[][] board, int row, int col, char c){
+        for(int i = 0; i < 9; i++) {
+            if(board[i][col] != '.' && board[i][col] == c) return false; //check row
+            if(board[row][i] != '.' && board[row][i] == c) return false; //check column
+            if(board[3 * (row / 3) + i / 3][ 3 * (col / 3) + i % 3] != '.' &&
+                    board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == c) return false; //check 3*3 block
+        }
+        return true;
+    }
+
+    /**
+     *
+     * Combinations
+     *
+     * Given two integers n and k, return all possible combinations of k numbers out of the range [1, n].
+     *
+     * You may return the answer in any order.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: n = 4, k = 2
+     * Output:
+     * [
+     *   [2,4],
+     *   [3,4],
+     *   [2,3],
+     *   [1,2],
+     *   [1,3],
+     *   [1,4],
+     * ]
+     * Example 2:
+     *
+     * Input: n = 1, k = 1
+     * Output: [[1]]
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= n <= 20
+     * 1 <= k <= n
+     *
+     *
+     *
+     */
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> combs = new ArrayList<List<Integer>>();
+        combine(combs, new ArrayList<Integer>(), 1, n, k);
+        return combs;
+    }
+
+    public void combine(List<List<Integer>> combs, List<Integer> comb, int start, int n, int k) {
+        System.out.println("combine: start=" + start + " n=" + n + " k=" + k);
+        if(k==0) {
+            combs.add(new ArrayList<Integer>(comb));
+            return;
+        }
+        for(int i=start;i<=n;i++) {
+            comb.add(i);
+            combine(combs, comb, i+1, n, k-1);
+            comb.remove(comb.size()-1);
+        }
+    }
+
+    /**
+     *
+     * Same Tree
+     *
+     * Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+     *
+     * Two binary trees are considered the same if they are structurally identical,
+     * and the nodes have the same value.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: p = [1,2,3], q = [1,2,3]
+     * Output: true
+     * Example 2:
+     *
+     *
+     * Input: p = [1,2], q = [1,null,2]
+     * Output: false
+     * Example 3:
+     *
+     *
+     * Input: p = [1,2,1], q = [1,1,2]
+     * Output: false
+     *
+     *
+     * Constraints:
+     *
+     * The number of nodes in both trees is in the range [0, 100].
+     * -104 <= Node.val <= 104
+     *
+     *
+     */
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+
+        if (p == null && q == null)
+            return true;
+
+        if (p == null || q == null)
+            return false;
+
+        if (p.val != q.val)
+            return false;
+
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+
+    /**
+     *
+     * Generate Parentheses
+     *
+     * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: n = 3
+     * Output: ["((()))","(()())","(())()","()(())","()()()"]
+     * Example 2:
+     *
+     * Input: n = 1
+     * Output: ["()"]
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= n <= 8
+     *
+     *
+     */
+    public List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<String>();
+        backtrack(list, "", 0, 0, n);
+        return list;
+    }
+
+    public void backtrack(List<String> list, String str, int open, int close, int max) {
+
+        //System.out.println("str=" + str + " open=" + open + " close=" + close + " max=" + max);
+        System.out.println("backtrace(" + str + "," + open + "," + close + "," + max + ")");
+
+        if (str.length() == max * 2) {
+            list.add(str);
+            return;
+        }
+
+        if (open < max)
+            backtrack(list, str + "(", open + 1, close, max);
+        if (close < open)
+            backtrack(list, str + ")", open, close + 1, max);
+
+    }
 }
