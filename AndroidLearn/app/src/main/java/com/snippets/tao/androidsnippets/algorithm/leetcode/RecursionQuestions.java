@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * Created by Tao He on 2021/6/17.
@@ -38,7 +39,13 @@ public class RecursionQuestions {
         //int n = 15;
         //System.out.println(n + " queens has " + totalNQueens(n) + " solutions");
         //combine(4, 2);
-        generateParenthesis(3);
+        //generateParenthesis(3);
+        //int[] heights = new int[]{2,1,5,6,2,3};
+        //int largest = largestRectangleArea(heights);
+        //System.out.println("largest: " + largest);
+        //getMaxArea(heights, 6);
+        int[] array = new int[]{1,2,3};
+        permute(array);
     }
 
     /**
@@ -920,5 +927,176 @@ public class RecursionQuestions {
         if (close < open)
             backtrack(list, str + ")", open, close + 1, max);
 
+    }
+
+    /**
+     *
+     * Largest Rectangle in Histogram
+     *
+     * Given an array of integers heights representing the histogram's bar height where the width of
+     * each bar is 1, return the area of the largest rectangle in the histogram.
+     *
+     *
+     *
+     * Example 1:
+     *
+     *
+     * Input: heights = [2,1,5,6,2,3]
+     * Output: 10
+     * Explanation: The above is a histogram where width of each bar is 1.
+     * The largest rectangle is shown in the red area, which has an area = 10 units.
+     * Example 2:
+     *
+     *
+     * Input: heights = [2,4]
+     * Output: 4
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= heights.length <= 105
+     * 0 <= heights[i] <= 104
+     *
+     */
+    public int largestRectangleArea(int[] heights) {
+        if (heights == null || heights.length == 0) {
+            return 0;
+        }
+        int[] lessFromLeft = new int[heights.length]; // idx of the first bar the left that is lower than current
+        int[] lessFromRight = new int[heights.length]; // idx of the first bar the right that is lower than current
+        lessFromRight[heights.length - 1] = heights.length;
+        lessFromLeft[0] = -1;
+
+        for (int i = 1; i < heights.length; i++) {
+            int p = i - 1;
+
+            while (p >= 0 && heights[p] >= heights[i]) {
+                p = lessFromLeft[p];
+            }
+            lessFromLeft[i] = p;
+        }
+
+        for (int i = heights.length - 2; i >= 0; i--) {
+            int p = i + 1;
+
+            while (p < heights.length && heights[p] >= heights[i]) {
+                p = lessFromRight[p];
+            }
+            lessFromRight[i] = p;
+        }
+
+        int maxArea = 0;
+        for (int i = 0; i < heights.length; i++) {
+            maxArea = Math.max(maxArea, heights[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
+        }
+
+        return maxArea;
+    }
+
+    /**
+     *
+     * Permutations
+     *
+     * Given an array nums of distinct integers, return all the possible permutations.
+     * You can return the answer in any order.
+     *
+     *
+     * Example 1:
+     *
+     * Input: nums = [1,2,3]
+     * Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+     * Example 2:
+     *
+     * Input: nums = [0,1]
+     * Output: [[0,1],[1,0]]
+     * Example 3:
+     *
+     * Input: nums = [1]
+     * Output: [[1]]
+     *
+     *
+     * Constraints:
+     *
+     * 1 <= nums.length <= 6
+     * -10 <= nums[i] <= 10
+     * All the integers of nums are unique.
+     *
+     *
+     *
+     */
+
+    public List<List<Integer>> permute(int[] nums) {
+        if (nums == null)
+            return null;
+
+        List<List<Integer>> result = new ArrayList<>();
+        permute(result, new ArrayList<>(), nums);
+        return result;
+    }
+
+    private void permute(List<List<Integer>> res, List<Integer> list, int[] nums) {
+        if (list.size() == nums.length) {
+            res.add(new ArrayList<>(list));
+            return;
+        }
+
+        for(int i = 0; i < nums.length; i++) {
+            if (list.contains(nums[i]))
+                continue;
+            list.add(nums[i]);
+            permute(res, list, nums);
+            list.remove(list.size() - 1);
+        }
+    }
+
+
+    /**
+     *
+     * Letter Combinations of a Phone Number
+     *
+     * Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+     * Return the answer in any order.
+     *
+     * A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+     *
+     *
+     *
+     *
+     *
+     * Example 1:
+     *
+     * Input: digits = "23"
+     * Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+     * Example 2:
+     *
+     * Input: digits = ""
+     * Output: []
+     * Example 3:
+     *
+     * Input: digits = "2"
+     * Output: ["a","b","c"]
+     *
+     *
+     * Constraints:
+     *
+     * 0 <= digits.length <= 4
+     * digits[i] is a digit in the range ['2', '9'].
+     *
+     */
+
+    public List<String> letterCombinations(String digits) {
+        LinkedList<String> ans = new LinkedList<String>();
+        if(digits.isEmpty()) return ans;
+        String[] mapping = new String[] {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        ans.add("");
+        for(int i = 0; i < digits.length(); i++){
+            int x = Character.getNumericValue(digits.charAt(i));
+            while(ans.peek().length() == i){
+                String t = ans.remove();
+                for(char s : mapping[x].toCharArray())
+                    ans.add(t+s);
+            }
+        }
+        return ans;
     }
 }
