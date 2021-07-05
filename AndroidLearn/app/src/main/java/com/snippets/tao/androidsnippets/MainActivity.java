@@ -33,6 +33,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.snippets.tao.androidsnippets.algorithm.ctci.ArrayStringImpl;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.ArrayQuestions;
+import com.snippets.tao.androidsnippets.algorithm.leetcode.BinarySearchQuestions;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.BinaryTreeQuestions;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.LinkedListQuestions;
 import com.snippets.tao.androidsnippets.algorithm.leetcode.QueueStackQuestions;
@@ -166,7 +167,8 @@ public class MainActivity extends AppCompatActivity implements ScreenshotManager
         //ArrayQuestions.test();
         //LinkedListQuestions.test();
         //new QueueStackQuestions().test();
-        new RecursionQuestions().test();
+        //new RecursionQuestions().test();
+        new BinarySearchQuestions().test();
 
         /*
         try {
