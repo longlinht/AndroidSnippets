@@ -1149,70 +1149,70 @@ public class RecursionQuestions {
      *
      */
 
-public List<List<Integer>> getSkyline(int[][] buildings) {
-    if (buildings.length == 0)
-        return new LinkedList<List<Integer>>();
-    return recurSkyline(buildings, 0, buildings.length - 1);
-}
+    public List<List<Integer>> getSkyline(int[][] buildings) {
+        if (buildings.length == 0)
+            return new LinkedList<List<Integer>>();
+        return recurSkyline(buildings, 0, buildings.length - 1);
+    }
 
-private LinkedList<List<Integer>> recurSkyline(int[][] buildings, int p, int q) {
-    if (p < q) {
-        int mid = p + (q - p) / 2;
-        return merge(recurSkyline(buildings, p, mid),
-                recurSkyline(buildings, mid + 1, q));
-    } else {
+    private LinkedList<List<Integer>> recurSkyline(int[][] buildings, int p, int q) {
+        if (p < q) {
+            int mid = p + (q - p) / 2;
+            return merge(recurSkyline(buildings, p, mid),
+                    recurSkyline(buildings, mid + 1, q));
+        } else {
+            LinkedList<List<Integer>> rs = new LinkedList<List<Integer>>();
+
+            List<Integer> l1 = new ArrayList<>();
+            l1.add(buildings[p][0]);
+            l1.add(buildings[p][2]);
+
+
+            List<Integer> l2 = new ArrayList<>();
+            l2.add(buildings[p][1]);
+            l2.add(0);
+
+            rs.add(l1);
+            rs.add(l2);
+
+            return rs;
+        }
+    }
+
+    private LinkedList<List<Integer>> merge(LinkedList<List<Integer>> l1, LinkedList<List<Integer>> l2) {
         LinkedList<List<Integer>> rs = new LinkedList<List<Integer>>();
+        int h1 = 0, h2 = 0;
+        while (l1.size() > 0 && l2.size() > 0) {
+            int x = 0, h = 0;
+            if (l1.getFirst().get(0) < l2.getFirst().get(0)) {
+                x = l1.getFirst().get(0);
+                h1 = l1.getFirst().get(1);
+                h = Math.max(h1, h2);
+                l1.removeFirst();
+            } else if (l1.getFirst().get(0) > l2.getFirst().get(0)) {
+                x = l2.getFirst().get(0);
+                h2 = l2.getFirst().get(1);
+                h = Math.max(h1, h2);
+                l2.removeFirst();
+            } else {
+                x = l1.getFirst().get(0);
+                h1 = l1.getFirst().get(1);
+                h2 = l2.getFirst().get(1);
+                h = Math.max(h1, h2);
+                l1.removeFirst();
+                l2.removeFirst();
+            }
+            if (rs.size() == 0 || h != rs.getLast().get(1)) {
 
-        List<Integer> l1 = new ArrayList<>();
-        l1.add(buildings[p][0]);
-        l1.add(buildings[p][2]);
+                List<Integer> list = new ArrayList<>();
+                list.add(x);
+                list.add(h);
 
-
-        List<Integer> l2 = new ArrayList<>();
-        l2.add(buildings[p][1]);
-        l2.add(0);
-
-        rs.add(l1);
-        rs.add(l2);
-
+                rs.add(list);
+            }
+        }
+        rs.addAll(l1);
+        rs.addAll(l2);
         return rs;
     }
-}
-
-private LinkedList<List<Integer>> merge(LinkedList<List<Integer>> l1, LinkedList<List<Integer>> l2) {
-    LinkedList<List<Integer>> rs = new LinkedList<List<Integer>>();
-    int h1 = 0, h2 = 0;
-    while (l1.size() > 0 && l2.size() > 0) {
-        int x = 0, h = 0;
-        if (l1.getFirst().get(0) < l2.getFirst().get(0)) {
-            x = l1.getFirst().get(0);
-            h1 = l1.getFirst().get(1);
-            h = Math.max(h1, h2);
-            l1.removeFirst();
-        } else if (l1.getFirst().get(0) > l2.getFirst().get(0)) {
-            x = l2.getFirst().get(0);
-            h2 = l2.getFirst().get(1);
-            h = Math.max(h1, h2);
-            l2.removeFirst();
-        } else {
-            x = l1.getFirst().get(0);
-            h1 = l1.getFirst().get(1);
-            h2 = l2.getFirst().get(1);
-            h = Math.max(h1, h2);
-            l1.removeFirst();
-            l2.removeFirst();
-        }
-        if (rs.size() == 0 || h != rs.getLast().get(1)) {
-
-            List<Integer> list = new ArrayList<>();
-            list.add(x);
-            list.add(h);
-
-            rs.add(list);
-        }
-    }
-    rs.addAll(l1);
-    rs.addAll(l2);
-    return rs;
-}
 }
